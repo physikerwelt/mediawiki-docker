@@ -1,0 +1,31 @@
+version: '3.4'
+services:
+  mediawiki:
+    container_name: mw
+    build: .
+    restart: always
+    ports:
+      - 8080:80
+    links:
+      - database
+    volumes:
+      - mw-images:/var/www/html/images
+      # After initial setup, download LocalSettings.php to the same directory as
+      # this yaml and uncomment the following line and use compose to restart
+      # the mediawiki service
+  database:
+    image: mariadb
+    restart: always
+    environment:
+      # @see https://phabricator.wikimedia.org/source/mediawiki/browse/master/includes/DefaultSettings.php
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+    volumes: 
+      - mw-database:/var/lib/mysql
+secrets:
+   db_password:
+     file: secret/db_password.txt
+   db_root_password:
+     file: secret/db_root_password.txt
+volumes:
+  mw-images:
+  mw-database:
