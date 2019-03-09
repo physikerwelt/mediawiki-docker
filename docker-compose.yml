@@ -10,6 +10,10 @@ services:
       - database
     volumes:
       - mw-images:/var/www/html/images
+    labels:
+      - traefik.enable=true
+      - traefik.port=80
+      - traefik.frontend.rule=Host:localhost,physikerwelt.de
   database:
     container_name: db
     image: mariadb
@@ -20,6 +24,17 @@ services:
       - ./dumps:/docker-entrypoint-initdb.d
     secrets:
       - db_root_password
+    labels:
+      - "traefik.enable=false"
+  reverse-proxy:
+    image: traefik # The official Traefik docker image
+    restart: always
+    command: --api --docker # Enables the web UI and tells Traefik to listen to docker
+    ports:
+      - "80:80"     # The HTTP port
+      - "8888:8080" # The Web UI (enabled by --api)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
 secrets:
    db_root_password:
      file: secret/db_root_password.txt
