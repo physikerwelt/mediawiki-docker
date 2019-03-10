@@ -31,7 +31,7 @@ $wgScriptPath = "";
 $wgArticlePath = "/wiki/$1";
 $wgUsePathInfo = false;
 ## The protocol and server name to use in fully-qualified URLs
-$wgServer = "http://localhost";
+#$wgServer = "http://localhost";
 
 ## The URL path to static resources (images, scripts, etc.)
 $wgResourceBasePath = $wgScriptPath;
@@ -149,3 +149,33 @@ wfLoadExtension( 'WikiEditor' );
 # End of automatically generated settings.
 # Add more configuration options below.
 
+if ( defined( 'MW_DB' ) ) {
+    // Set $wikiId from the defined constant 'MW_DB' that is set by maintenance scripts.
+    $wikiId = MW_DB;
+} elseif (!isset($_SERVER['SERVER_NAME'])) {
+    die( 'Server name not set.' );
+} else {
+	$srv = $_SERVER['SERVER_NAME'];
+	if ( strpos( $srv, 'physikerwelt.de' ) !== false){
+		$wikiId = 'physikerwelt';
+	} else {
+		$wikiId = 'test';
+	}
+}
+$wgDBname = 'wiki_'.$wikiId;
+switch ($wikiId) {
+	case 'physikerwelt':
+	    $wgSitename = "PhysikWiki";
+	    $wgLanguageCode = 'de';
+		# code...
+		break;
+	
+	default:
+		# code...
+		break;
+}
+
+## DEBUG
+/**
+$wgShowExceptionDetails=true;
+## END DEBUG **/

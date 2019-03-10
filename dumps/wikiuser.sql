@@ -1,1 +1,1 @@
-GRANT ALL  ON `wiki\_%`.* TO 'wikiuser'@localhost identified by 'wikipassword';
+GRANT ALL  ON `wiki\_%`.* TO 'wikiuser'@'%' identified by 'wikipassword';
