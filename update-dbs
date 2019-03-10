@@ -1,0 +1,4 @@
+#!/bin/bash
+for wiki in `cat wikis.txt`; do
+  docker exec mw sh -c "exec /var/www/html/maintenance/update.php --wiki=$wiki --quick"
+ done

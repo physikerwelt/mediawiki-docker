@@ -144,6 +144,7 @@ wfLoadExtension( 'PdfHandler' );
 wfLoadExtension( 'ReplaceText' );
 wfLoadExtension( 'SyntaxHighlight_GeSHi' );
 wfLoadExtension( 'WikiEditor' );
+wfLoadExtension( 'Math' );
 
 
 # End of automatically generated settings.
