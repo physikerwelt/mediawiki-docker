@@ -180,7 +180,7 @@ switch ($wikiId) {
 }
 
 ## DEBUG
-#/**
+/**
 $wgShowExceptionDetails=true;
 $wgDebugToolbar = true;
 ## END DEBUG **/

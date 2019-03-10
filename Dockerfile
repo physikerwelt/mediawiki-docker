@@ -10,3 +10,4 @@ RUN ["composer","install","--no-dev"]
 FROM mediawiki:1.32
 COPY --from=composer /composer /var/www/html
 COPY /mediawiki /var/www/html
+RUN chown -R www-data:www-data /var/www/html/images
