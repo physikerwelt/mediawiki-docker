@@ -8,8 +8,6 @@ services:
       - 8080:80
     links:
       - database
-    volumes:
-      - mw-images:/var/www/html/images
     labels:
       - traefik.enable=true
       - traefik.port=80
@@ -40,5 +38,4 @@ secrets:
    db_root_password:
      file: secret/db_root_password.txt
 volumes:
-  mw-images:
   mw-database:
