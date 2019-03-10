@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -eu
+# from https://raw.githubusercontent.com/addshore/mediawiki-docker-dev/master/hosts-remove
+# Check Windows first as Windows can also have a /etc/hosts
+if [ ! -f C:\\Windows\\System32\\drivers\\etc\\hosts ]; then
+    if [ ! -f /etc/hosts ]; then
+        echo "Failed to find hosts file."
+        exit
+    else
+        HOSTSFILE=/etc/hosts
+    fi
+else
+    HOSTSFILE=C:\\Windows\\System32\\drivers\\etc\\hosts
+fi
+
+# When running on Windows as administrator, 'grep' and 'sed' may not be in the PATH
+if [ ! -f /usr/bin/grep ]; then
+    GREPFILE=grep
+else
+    GREPFILE=/usr/bin/grep
+fi
+if [ ! -f /usr/bin/sed ]; then
+    SEDFILE=sed
+else
+    SEDFILE=/usr/bin/sed
+fi
+
+# TODO escalate / warn if file not accessible by current user
+
+# Remove all of the lines we have added
+$GREPFILE -v mediawiki-docker-dev $HOSTSFILE > ./.hosts.tmp
+# Remove any excess whitespace
+$SEDFILE -i.bak '/^[[:space:]]*$/{:a;$d;N;/\n[[:space:]]*$/ba}' ./.hosts.tmp
+# Overwrite the hosts file with our new content
+cat ./.hosts.tmp > $HOSTSFILE
+# Delete the temp files
+rm ./.hosts.tmp

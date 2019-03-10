@@ -55,7 +55,7 @@ $wgEmailAuthentication = true;
 ## Database settings
 $wgDBtype = "mysql";
 $wgDBserver = "db";
-$wgDBname = "wiki_test";
+$wgDBname = "wiki_physikerwelt";
 $wgDBuser = "wikiuser";
 $wgDBpassword = "wikipassword";
 
