@@ -170,7 +170,9 @@ switch ($wikiId) {
 	    $wgLanguageCode = 'de';
 	    enableSemantics( 'physikerwelt.de' );
 	    include_once("$IP/extensions/SemanticDrilldown/SemanticDrilldown.php");
-		# code...
+		$wgLogo= "/images/PhysikWiki.png";
+		$wgHashedUploadDirectory = false;
+		$wgEnableUploads = true;
 		break;
 	
 	default:
@@ -179,6 +181,7 @@ switch ($wikiId) {
 }
 
 ## DEBUG
-/**
+#/**
 $wgShowExceptionDetails=true;
+$wgDebugToolbar = true;
 ## END DEBUG **/
