@@ -172,7 +172,6 @@ switch ($wikiId) {
 	    include_once("$IP/extensions/SemanticDrilldown/SemanticDrilldown.php");
 		$wgLogo= "/images/PhysikWiki.png";
 		$wgHashedUploadDirectory = false;
-		$wgEnableUploads = true;
 		break;
 	
 	default:
