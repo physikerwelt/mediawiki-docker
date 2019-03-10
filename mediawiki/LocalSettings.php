@@ -159,6 +159,8 @@ if ( defined( 'MW_DB' ) ) {
 	$srv = $_SERVER['SERVER_NAME'];
 	if ( strpos( $srv, 'physikerwelt.de' ) !== false){
 		$wikiId = 'physikerwelt';
+	} else if(strpos( $srv, 'drmf' ) !== false){
+		$wikiId = 'drmfbeta';
 	} else {
 		$wikiId = 'test';
 	}
@@ -170,11 +172,20 @@ switch ($wikiId) {
 	    $wgLanguageCode = 'de';
 	    enableSemantics( 'physikerwelt.de' );
 	    include_once("$IP/extensions/SemanticDrilldown/SemanticDrilldown.php");
-		$wgLogo= "/images/PhysikWiki.png";
+		$wgLogo = "/images/PhysikWiki.png";
 		$wgHashedUploadDirectory = false;
+		break;
+	case 'drmfbeta':
+		$wgSitename = 'DRMF';
+		$wgCapitalLinks = false;
+		$wgLogo = "/images/DRMF.png";
+		$wgMetaNamespace = 'Project';
+		wfLoadExtension( 'Scribunto' );
+		$wgScribuntoDefaultEngine = 'luastandalone';
 		break;
 	
 	default:
+
 		# code...
 		break;
 }

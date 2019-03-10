@@ -10,3 +10,6 @@
 [submodule "mediawiki/extensions/AutoSitemap"]
 	path = mediawiki/extensions/AutoSitemap
 	url = https://github.com/dolfinus/AutoSitemap
+[submodule "mediawiki/extensions/Scribunto"]
+	path = mediawiki/extensions/Scribunto
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/Scribunto
