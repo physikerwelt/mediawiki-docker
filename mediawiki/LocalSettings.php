@@ -168,6 +168,8 @@ switch ($wikiId) {
 	case 'physikerwelt':
 	    $wgSitename = "PhysikWiki";
 	    $wgLanguageCode = 'de';
+	    enableSemantics( 'physikerwelt.de' );
+	    include_once("$IP/extensions/SemanticDrilldown/SemanticDrilldown.php");
 		# code...
 		break;
 	

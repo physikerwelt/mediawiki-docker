@@ -4,3 +4,6 @@
 [submodule "mediawiki/extensions/MathSearch"]
 	path = mediawiki/extensions/MathSearch
 	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/MathSearch
+[submodule "mediawiki/extensions/SemanticDrilldown"]
+	path = mediawiki/extensions/SemanticDrilldown
+	url = https://gerrit.wikimedia.org/r/p/mediawiki/extensions/SemanticDrilldown.git
