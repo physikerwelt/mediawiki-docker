@@ -151,27 +151,33 @@ wfLoadExtension( 'Math' );
 # Add more configuration options below.
 
 if ( defined( 'MW_DB' ) ) {
-    // Set $wikiId from the defined constant 'MW_DB' that is set by maintenance scripts.
-    $wikiId = MW_DB;
-} elseif (!isset($_SERVER['SERVER_NAME'])) {
-    die( 'Server name not set.' );
+	// Set $wikiId from the defined constant 'MW_DB' that is set by maintenance scripts.
+	$wikiId = MW_DB;
+} elseif ( !isset( $_SERVER['SERVER_NAME'] ) ) {
+	die( 'Server name not set.' );
 } else {
 	$srv = $_SERVER['SERVER_NAME'];
-	if ( strpos( $srv, 'physikerwelt.de' ) !== false){
+	if ( strpos( $srv, 'physikerwelt.de' ) !== false ) {
 		$wikiId = 'physikerwelt';
-	} else if(strpos( $srv, 'drmf' ) !== false){
-		$wikiId = 'drmfbeta';
 	} else {
-		$wikiId = 'test';
+		if ( strpos( $srv, 'drmf' ) !== false ) {
+			$wikiId = 'drmfbeta';
+		} else {
+			if ( strpos( $srv, 'formulasearchengine.com' ) !== false ) {
+				$wikiId = 'enfse';
+			} else {
+				$wikiId = 'test';
+			}
+		}
 	}
 }
-$wgDBname = 'wiki_'.$wikiId;
-switch ($wikiId) {
+$wgDBname = 'wiki_' . $wikiId;
+switch ( $wikiId ) {
 	case 'physikerwelt':
-	    $wgSitename = "PhysikWiki";
-	    $wgLanguageCode = 'de';
-	    enableSemantics( 'physikerwelt.de' );
-	    include_once("$IP/extensions/SemanticDrilldown/SemanticDrilldown.php");
+		$wgSitename = "PhysikWiki";
+		$wgLanguageCode = 'de';
+		enableSemantics( 'physikerwelt.de' );
+		include_once( "$IP/extensions/SemanticDrilldown/SemanticDrilldown.php" );
 		$wgLogo = "/images/PhysikWiki.png";
 		$wgHashedUploadDirectory = false;
 		break;
@@ -183,7 +189,14 @@ switch ($wikiId) {
 		wfLoadExtension( 'Scribunto' );
 		$wgScribuntoDefaultEngine = 'luastandalone';
 		break;
-	
+	case 'enfse':
+		$wgSitename = 'formulasearchengine';
+		$wgLogo = "/images/fse_132.png";
+		$wgLogoHD = [
+			"1.5x" => "path/to/fse_202.png",
+			"2x" => "path/to/fse_270.png"
+		];
+		break;
 	default:
 
 		# code...
@@ -192,6 +205,6 @@ switch ($wikiId) {
 
 ## DEBUG
 /**
-$wgShowExceptionDetails=true;
-$wgDebugToolbar = true;
-## END DEBUG **/
+ * $wgShowExceptionDetails=true;
+ * $wgDebugToolbar = true;
+ * ## END DEBUG **/
