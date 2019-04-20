@@ -1,0 +1,11 @@
+.mwe-math-mathml-a11y {
+    clip: auto !important;
+    overflow: visible !important;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    opacity: 1 !important;
+}
+.mwe-math-fallback-image-inline, .mwe-math-fallback-image-display {
+    display: none !important;
+}
