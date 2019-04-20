@@ -201,6 +201,18 @@ switch ( $wikiId ) {
 		$wgDBname = 'wiki_enfse';
 		$wgSitename = 'MathML';
 		$wgLogo = "/images/mathml.png";
+		$wgResourceModules['mathml.customizations'] = array(
+			'styles' => "mathml.css", // Stylesheet to be loaded in all skins
+			// End custom styles for vector
+			'localBasePath' => "$IP/mathml/",
+			'remoteBasePath' => "$wgScriptPath/mathml/"
+		);
+
+		function efCustomBeforePageDisplay( &$out, &$skin ) {
+			$out->addModules( array( 'mathml.customizations' ) );
+		}
+
+		$wgHooks['BeforePageDisplay'][] = 'efCustomBeforePageDisplay';
 		break;
 	default:
 
