@@ -162,13 +162,13 @@ if ( defined( 'MW_DB' ) ) {
 	} else {
 		if ( strpos( $srv, 'drmf' ) !== false ) {
 			$wikiId = 'drmfbeta';
-		} else {
-			if ( strpos( $srv, 'formulasearchengine.com' ) !== false ) {
+		} else if ( strpos( $srv, 'formulasearchengine.com' ) !== false ) {
 				$wikiId = 'enfse';
-			} else {
+		} else if ( strpos( $srv, 'mathml' ) !== false ) {
+			$wikiId = 'mathml';
+		} else {
 				$wikiId = 'test';
 			}
-		}
 	}
 }
 $wgDBname = 'wiki_' . $wikiId;
@@ -193,9 +193,14 @@ switch ( $wikiId ) {
 		$wgSitename = 'formulasearchengine';
 		$wgLogo = "/images/fse_132.png";
 		$wgLogoHD = [
-			"1.5x" => "path/to/fse_202.png",
-			"2x" => "path/to/fse_270.png"
+			"1.5x" => "/images/fse_202.png",
+			"2x" => "/images/fse_270.png",
 		];
+		break;
+	case 'mathml':
+		$wgDBname = 'wiki_enfse';
+		$wgSitename = 'MathML';
+		$wgLogo = "/images/mathml.png";
 		break;
 	default:
 

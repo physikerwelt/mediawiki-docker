@@ -1,2 +1,4 @@
 127.0.0.1 physikerwelt.de # mediawiki-docker-dev
 127.0.0.1 drmf.wmflabs.org # mediawiki-docker-dev
+127.0.0.1 mathml.localhost # mediawiki-docker-dev
+127.0.0.1 formulasearchengine.com.local # mediawiki-docker-dev
