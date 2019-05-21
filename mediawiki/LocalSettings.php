@@ -196,6 +196,7 @@ switch ( $wikiId ) {
 			"1.5x" => "/images/fse_202.png",
 			"2x" => "/images/fse_270.png",
 		];
+        wfLoadExtension( 'MathSearch' );
 		break;
 	case 'mathml':
 		$wgDBname = 'wiki_enfse';
