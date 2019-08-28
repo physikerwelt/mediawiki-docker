@@ -13,3 +13,6 @@
 [submodule "mediawiki/extensions/Scribunto"]
 	path = mediawiki/extensions/Scribunto
 	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/Scribunto
+[submodule "mediawiki/extensions/Wikibase"]
+	path = mediawiki/extensions/Wikibase
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/Wikibase.git

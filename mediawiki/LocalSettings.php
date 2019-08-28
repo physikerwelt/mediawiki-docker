@@ -146,7 +146,6 @@ wfLoadExtension( 'SyntaxHighlight_GeSHi' );
 wfLoadExtension( 'WikiEditor' );
 wfLoadExtension( 'Math' );
 
-
 # End of automatically generated settings.
 # Add more configuration options below.
 

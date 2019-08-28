@@ -2,5 +2,12 @@
     "require": {
         "mediawiki/semantic-media-wiki": "~3.0",
         "mediawiki/semantic-result-formats": "~3.0"
+    },
+   "extra": {
+    "merge-plugin": {
+      "include": [
+        "extensions/Wikibase/composer.json"
+      ]
     }
+  }
 }
