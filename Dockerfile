@@ -6,6 +6,9 @@ COPY --from=base /var/www/html /composer
 COPY ./composer /composer
 ENV COMPOSER_ALLOW_SUPERUSER 1 
 RUN ["composer","install","--no-dev"]
+RUN ["composer","install","--no-dev"]
+RUN ["composer","update","--no-dev"]
+
 
 FROM mediawiki:1.33
 COPY --from=composer /composer /var/www/html

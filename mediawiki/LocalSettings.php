@@ -166,8 +166,8 @@ if ( defined( 'MW_DB' ) ) {
 		} else if ( strpos( $srv, 'mathml' ) !== false ) {
 			$wikiId = 'mathml';
 		} else {
-				$wikiId = 'test';
-			}
+			$wikiId = 'test';
+		}
 	}
 }
 $wgDBname = 'wiki_' . $wikiId;
@@ -214,6 +214,16 @@ switch ( $wikiId ) {
 
 		$wgHooks['BeforePageDisplay'][] = 'efCustomBeforePageDisplay';
 		break;
+	case 'test':
+	    $wgShowExceptionDetails=true;
+        $wgDebugToolbar = true;
+		$wgEnableWikibaseRepo = true;
+		$wgEnableWikibaseClient = true;
+		require_once "$IP/extensions/Wikibase/repo/Wikibase.php";
+		require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
+		require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
+		require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
+		break;
 	default:
 
 		# code...
@@ -222,6 +232,6 @@ switch ( $wikiId ) {
 
 ## DEBUG
 /**
- * $wgShowExceptionDetails=true;
- * $wgDebugToolbar = true;
- * ## END DEBUG **/
+$wgShowExceptionDetails=true;
+$wgDebugToolbar = true;
+## END DEBUG **/
