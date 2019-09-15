@@ -22,3 +22,39 @@
 [submodule "mathoid"]
 	path = mathoid
 	url = https://gerrit.wikimedia.org/r/mediawiki/services/mathoid
+[submodule "mediawiki/skins/Vector"]
+	path = mediawiki/skins/Vector
+	url = https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
+[submodule "mediawiki/extensions/Cite"]
+	path = mediawiki/extensions/Cite
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/Cite
+[submodule "mediawiki/extensions/CiteThisPage"]
+	path = mediawiki/extensions/CiteThisPage
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/CiteThisPage
+[submodule "mediawiki/extensions/CodeEditor"]
+	path = mediawiki/extensions/CodeEditor
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/CodeEditor
+[submodule "mediawiki/extensions/ConfirmEdit"]
+	path = mediawiki/extensions/ConfirmEdit
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/ConfirmEdit
+[submodule "mediawiki/extensions/Gadgets"]
+	path = mediawiki/extensions/Gadgets
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/Gadgets
+[submodule "mediawiki/extensions/MultimediaViewer"]
+	path = mediawiki/extensions/MultimediaViewer
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/MultimediaViewer
+[submodule "mediawiki/extensions/ParserFunctions"]
+	path = mediawiki/extensions/ParserFunctions
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/ParserFunctions
+[submodule "mediawiki/extensions/PdfHandler"]
+	path = mediawiki/extensions/PdfHandler
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/PdfHandler
+[submodule "mediawiki/extensions/ReplaceText"]
+	path = mediawiki/extensions/ReplaceText
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/ReplaceText
+[submodule "mediawiki/extensions/SyntaxHighlight_GeSHi"]
+	path = mediawiki/extensions/SyntaxHighlight_GeSHi
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/SyntaxHighlight_GeSHi
+[submodule "mediawiki/extensions/WikiEditor"]
+	path = mediawiki/extensions/WikiEditor
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/WikiEditor

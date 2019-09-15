@@ -148,7 +148,9 @@ wfLoadExtension( 'Math' );
 
 # End of automatically generated settings.
 # Add more configuration options below.
-
+$wgMaxShellMemory = 2097152;
+$wgMathoidCli = ['/srv/mathoid/cli.js',
+				 '-c', '/srv/mathoid/config.yaml'];
 if ( defined( 'MW_DB' ) ) {
 	// Set $wikiId from the defined constant 'MW_DB' that is set by maintenance scripts.
 	$wikiId = MW_DB;
@@ -217,12 +219,12 @@ switch ( $wikiId ) {
 	case 'test':
 	    $wgShowExceptionDetails=true;
         $wgDebugToolbar = true;
-		/** $wgEnableWikibaseRepo = true;
+		$wgEnableWikibaseRepo = true;
 		$wgEnableWikibaseClient = true;
 		require_once "$IP/extensions/Wikibase/repo/Wikibase.php";
 		require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
 		require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
-		require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";**/
+		require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
 		break;
 	default:
 
