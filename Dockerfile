@@ -1,13 +1,13 @@
 FROM composer:1.5.1 AS composer
 WORKDIR /composer
 COPY /core /composer
-COPY /mediawiki/extensions /composer/extensions
+COPY /mediawiki /composer
 COPY ./composer /composer
 ENV COMPOSER_ALLOW_SUPERUSER 1 
 RUN ["composer","install","--no-dev"]
 
 
-FROM php:7.2-apache
+FROM php:7.2-apache AS mediawiki-preq
 
 # System dependencies
 RUN set -eux; \
@@ -22,8 +22,12 @@ RUN set -eux; \
 		# temporary woraround for T232866
 		curl \
 		gnupg \
+		librsvg2-dev \
 	; \
 	rm -rf /var/lib/apt/lists/*
+
+RUN curl -sL https://deb.nodesource.com/setup_11.x  | bash -
+RUN apt-get -y install nodejs
 
 # Install the PHP extensions we need
 RUN set -eux; \
@@ -89,12 +93,17 @@ RUN set -eux; \
 	mkdir -p /var/www/data; \
 	chown -R www-data:www-data /var/www/data
 
-COPY --from=composer /composer /var/www/html
-RUN chown -R www-data:www-data /var/www/html/images
-RUN curl -sL https://deb.nodesource.com/setup_11.x  | bash -
-RUN apt-get -y install nodejs librsvg2-dev
+
+FROM mediawiki-preq AS mathoid
 WORKDIR /srv/
 RUN git clone "https://gerrit.wikimedia.org/r/mediawiki/services/mathoid"
 WORKDIR /srv/mathoid
 RUN npm i
-WORKDIR /var/www/html
+
+
+FROM mediawiki-preq
+ 
+COPY --from=mathoid /srv /srv
+
+COPY --from=composer /composer /var/www/html
+RUN chown -R www-data:www-data /var/www/html/images
