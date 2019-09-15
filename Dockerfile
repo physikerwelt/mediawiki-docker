@@ -1,6 +1,7 @@
 FROM composer:1.5.1 AS composer
 WORKDIR /composer
 COPY /core /composer
+COPY /mediawiki/extensions /composer/extensions
 COPY ./composer /composer
 ENV COMPOSER_ALLOW_SUPERUSER 1 
 RUN ["composer","install","--no-dev"]
@@ -89,7 +90,6 @@ RUN set -eux; \
 	chown -R www-data:www-data /var/www/data
 
 COPY --from=composer /composer /var/www/html
-COPY /mediawiki /var/www/html
 RUN chown -R www-data:www-data /var/www/html/images
 RUN curl -sL https://deb.nodesource.com/setup_11.x  | bash -
 RUN apt-get -y install nodejs librsvg2-dev
