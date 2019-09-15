@@ -217,12 +217,12 @@ switch ( $wikiId ) {
 	case 'test':
 	    $wgShowExceptionDetails=true;
         $wgDebugToolbar = true;
-		$wgEnableWikibaseRepo = true;
+		/** $wgEnableWikibaseRepo = true;
 		$wgEnableWikibaseClient = true;
 		require_once "$IP/extensions/Wikibase/repo/Wikibase.php";
 		require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
 		require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
-		require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
+		require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";**/
 		break;
 	default:
 

@@ -16,3 +16,9 @@
 [submodule "mediawiki/extensions/Wikibase"]
 	path = mediawiki/extensions/Wikibase
 	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/Wikibase.git
+[submodule "core"]
+	path = core
+	url = https://gerrit.wikimedia.org/r/mediawiki/core
+[submodule "mathoid"]
+	path = mathoid
+	url = https://gerrit.wikimedia.org/r/mediawiki/services/mathoid
