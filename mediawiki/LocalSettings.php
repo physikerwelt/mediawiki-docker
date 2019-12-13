@@ -189,6 +189,11 @@ switch ( $wikiId ) {
 		$wgMetaNamespace = 'Project';
 		wfLoadExtension( 'Scribunto' );
 		$wgScribuntoDefaultEngine = 'luastandalone';
+		$wgMathValidModes[] = 'latexml'; // adding LaTeXML as rendering option
+		// Set LaTeXML as default rendering option;
+		$wgDefaultUserOptions['math'] = 'latexml';
+		// Specify the path to your LaTeXML instance that converts the \TeX commands to MathML (optional)
+		$wgLaTeXMLUrl = 'http://drmf-latexml.wmflabs.org/convert/';
 		break;
 	case 'enfse':
 		$wgSitename = 'formulasearchengine';
