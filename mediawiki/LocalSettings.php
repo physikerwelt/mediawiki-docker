@@ -183,6 +183,7 @@ switch ( $wikiId ) {
 		$wgHashedUploadDirectory = false;
 		break;
 	case 'drmfbeta':
+		$wgServer = 'https://drmf.wmflabs.org';
 		$wgSitename = 'DRMF';
 		$wgCapitalLinks = false;
 		$wgLogo = "/images/DRMF.png";
@@ -238,7 +239,7 @@ switch ( $wikiId ) {
 }
 
 ## DEBUG
-/**
 $wgShowExceptionDetails=true;
 $wgDebugToolbar = true;
+$wgMathDisableTexFilter='always';
 ## END DEBUG **/
