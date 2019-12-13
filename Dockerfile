@@ -1,9 +1,10 @@
-FROM composer:1.5.1 AS composer
+FROM composer:1.9.1 AS composer
 WORKDIR /composer
 COPY /core /composer
 COPY /mediawiki /composer
 COPY ./composer /composer
 ENV COMPOSER_ALLOW_SUPERUSER 1 
+RUN docker-php-ext-install pcntl
 RUN ["composer","install","--no-dev"]
 
 
