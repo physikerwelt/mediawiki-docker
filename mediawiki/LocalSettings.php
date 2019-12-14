@@ -175,6 +175,7 @@ if ( defined( 'MW_DB' ) ) {
 $wgDBname = 'wiki_' . $wikiId;
 switch ( $wikiId ) {
 	case 'physikerwelt':
+		$wgServer = 'https://wiki.physikerwelt.de';
 		$wgSitename = "PhysikWiki";
 		$wgLanguageCode = 'de';
 		enableSemantics( 'physikerwelt.de' );
@@ -194,9 +195,10 @@ switch ( $wikiId ) {
 		// Set LaTeXML as default rendering option;
 		$wgDefaultUserOptions['math'] = 'latexml';
 		// Specify the path to your LaTeXML instance that converts the \TeX commands to MathML (optional)
-		$wgLaTeXMLUrl = 'http://drmf-latexml.wmflabs.org/convert/';
+		$wgMathLaTeXMLUrl = 'http://drmf-latexml.wmflabs.org/convert/';
 		break;
 	case 'enfse':
+		$wgServer = 'https://en.formulasearchengine.com';
 		$wgSitename = 'formulasearchengine';
 		$wgLogo = "/images/fse_132.png";
 		$wgLogoHD = [
@@ -206,6 +208,7 @@ switch ( $wikiId ) {
         wfLoadExtension( 'MathSearch' );
 		break;
 	case 'mathml':
+		$wgServer = 'https://en.formulasearchengine.com';
 		$wgDBname = 'wiki_enfse';
 		$wgSitename = 'MathML';
 		$wgLogo = "/images/mathml.png";
@@ -223,6 +226,7 @@ switch ( $wikiId ) {
 		$wgHooks['BeforePageDisplay'][] = 'efCustomBeforePageDisplay';
 		break;
 	case 'test':
+		$wgServer = '//' . $srv;
 	    $wgShowExceptionDetails=true;
         $wgDebugToolbar = true;
 		$wgEnableWikibaseRepo = true;
