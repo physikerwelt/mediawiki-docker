@@ -195,7 +195,10 @@ switch ( $wikiId ) {
 		// Set LaTeXML as default rendering option;
 		$wgDefaultUserOptions['math'] = 'latexml';
 		// Specify the path to your LaTeXML instance that converts the \TeX commands to MathML (optional)
-		$wgMathLaTeXMLUrl = 'http://drmf-latexml.wmflabs.org/convert/';
+		$wgMathLaTeXMLUrl = 'http://latexml:8080/convert/';
+		$wgMathDefaultLaTeXMLSetting = array( 'format' => 'xhtml', 'whatsin' => 'math', 'whatsout' => 'math', 'pmml',  'cmml',  'mathtex',  'nodefaultresources',  'preload' => array( 'LaTeX.pool', 'article.cls', 'amsmath.sty', 'amsthm.sty', 'amstext.sty', 'amssymb.sty', 'eucal.sty', '[dvipsnames]xcolor.sty', 'url.sty', 'hyperref.sty', '[ids]latexml.sty', 'DLMFmath.sty' ), 'linelength' => 90 );
+		$wgMathMathMLUrl='http://mathoid:10042'; // linked docker service
+		$wgMathDisableTexFilter='always';
 		break;
 	case 'enfse':
 		$wgServer = 'https://en.formulasearchengine.com';
@@ -243,7 +246,6 @@ switch ( $wikiId ) {
 }
 
 ## DEBUG
-$wgShowExceptionDetails=true;
-$wgDebugToolbar = true;
-$wgMathDisableTexFilter='always';
+# $wgShowExceptionDetails=true;
+# $wgDebugToolbar = true;
 ## END DEBUG **/
