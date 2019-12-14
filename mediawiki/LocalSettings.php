@@ -149,8 +149,11 @@ wfLoadExtension( 'Math' );
 # End of automatically generated settings.
 # Add more configuration options below.
 $wgMaxShellMemory = 2097152;
-$wgMathoidCli = ['/srv/mathoid/cli.js',
-				 '-c', '/srv/mathoid/config.yaml'];
+$wgMathoidCli = [
+	'/srv/mathoid/cli.js',
+	'-c',
+	'/srv/mathoid/config.yaml',
+];
 if ( defined( 'MW_DB' ) ) {
 	// Set $wikiId from the defined constant 'MW_DB' that is set by maintenance scripts.
 	$wikiId = MW_DB;
@@ -163,12 +166,16 @@ if ( defined( 'MW_DB' ) ) {
 	} else {
 		if ( strpos( $srv, 'drmf' ) !== false ) {
 			$wikiId = 'drmfbeta';
-		} else if ( strpos( $srv, 'formulasearchengine.com' ) !== false ) {
-				$wikiId = 'enfse';
-		} else if ( strpos( $srv, 'mathml' ) !== false ) {
-			$wikiId = 'mathml';
 		} else {
-			$wikiId = 'test';
+			if ( strpos( $srv, 'formulasearchengine.com' ) !== false ) {
+				$wikiId = 'enfse';
+			} else {
+				if ( strpos( $srv, 'mathml' ) !== false ) {
+					$wikiId = 'mathml';
+				} else {
+					$wikiId = 'test';
+				}
+			}
 		}
 	}
 }
@@ -196,9 +203,86 @@ switch ( $wikiId ) {
 		$wgDefaultUserOptions['math'] = 'latexml';
 		// Specify the path to your LaTeXML instance that converts the \TeX commands to MathML (optional)
 		$wgMathLaTeXMLUrl = 'http://latexml:8080/convert/';
-		$wgMathDefaultLaTeXMLSetting = array( 'format' => 'xhtml', 'whatsin' => 'math', 'whatsout' => 'math', 'pmml',  'cmml',  'mathtex',  'nodefaultresources',  'preload' => array( 'LaTeX.pool', 'article.cls', 'amsmath.sty', 'amsthm.sty', 'amstext.sty', 'amssymb.sty', 'eucal.sty', '[dvipsnames]xcolor.sty', 'url.sty', 'hyperref.sty', '[ids]latexml.sty', 'DLMFmath.sty' ), 'linelength' => 90 );
-		$wgMathMathMLUrl='http://mathoid:10042'; // linked docker service
-		$wgMathDisableTexFilter='always';
+		$wgMathDefaultLaTeXMLSetting =
+			array(
+				'format' => 'xhtml',
+				'whatsin' => 'math',
+				'whatsout' => 'math',
+				'pmml',
+				'cmml',
+				'mathtex',
+				'nodefaultresources',
+				'preload' => array(
+					'LaTeX.pool',
+					'article.cls',
+					'amsmath.sty',
+					'amsthm.sty',
+					'amstext.sty',
+					'amssymb.sty',
+					'eucal.sty',
+					// '[dvipsnames]xcolor.sty',
+					'url.sty',
+					'hyperref.sty',
+					'[ids]latexml.sty',
+					'DLMFmath.sty',
+				),
+				'linelength' => 90,
+			);
+		$wgMathMathMLUrl = 'http://mathoid:10042'; // linked docker service
+		$wgMathDisableTexFilter = 'always';
+		$wgHooks['MathFormulaPostRender'] = array( 'wfOnMathFormulaRendered' );
+		$wgGroupPermissions['*']['edit'] = false;
+		$wgGroupPermissions['*']['createaccount'] = false;
+		$wgWBRepoSettings['formatterUrlProperty'] = 'P24';
+		// See https://www.mediawiki.org/wiki/Extension_default_namespaces
+		define( "NS_SOURCE", 130 );
+		define( "NS_SOURCE_TALK", 131 );
+		define( "NS_FORMULA", 132 );
+		define( "NS_FORMULA_TALK", 133 );
+		define( "NS_CD", 134 );
+		define( "NS_CD_TALK", 135 );
+		define( "NS_DEFINITION", 136 );
+		define( "NS_DEFINITION_TALK", 137 );
+		$wgExtraNamespaces = array(
+			NS_SOURCE => "Source",
+			NS_SOURCE_TALK => "Source_talk",
+			NS_FORMULA => "Formula",
+			NS_FORMULA_TALK => "Formula_talk",
+			NS_CD => "CD",
+			NS_CD_TALK => "CD_talk",
+			NS_DEFINITION => "Definition",
+			NS_DEFINITION_TALK => "Definition_talk",
+		);
+		/**
+		 * Callback function that is called after a formula was rendered
+		 * @param MathRenderer $Renderer
+		 * @param string|null $Result reference to the rendering result
+		 * @param int $pid
+		 * @param int $eid
+		 * @return bool
+		 */
+		function wfOnMathFormulaRendered( Parser $parser, MathRenderer $renderer, &$Result = null
+		) {
+			$id = $renderer->getID();
+			if ( $id ) {
+				$url = Title::newFromText( 'Formula:' . $id )->getLocalURL();
+				$Result =
+					preg_replace( "#</semantics>#",
+						"<annotation encoding=\"OpenMath\" >" . $renderer->getUserInputTex() .
+						"</annotation>\n</semantics>", $Result );
+				$Result =
+					'<a href="' . $url . '" id="' . $id . '" style="color:inherit;">' . $Result .
+					'</a>';
+			}
+
+			return true;
+		}
+
+		$smwgNamespacesWithSemanticLinks[NS_FORMULA] = true;
+		$smwgNamespacesWithSemanticLinks[NS_CD] = true;
+		$wgFlaggedRevsStatsAge = false;
+		$wgGroupPermissions['sysop']['review'] = true; #allow administrators to review revisions
+		wfLoadExtension( 'MathSearch' );
 		break;
 	case 'enfse':
 		$wgServer = 'https://en.formulasearchengine.com';
@@ -208,10 +292,10 @@ switch ( $wikiId ) {
 			"1.5x" => "/images/fse_202.png",
 			"2x" => "/images/fse_270.png",
 		];
-        wfLoadExtension( 'MathSearch' );
+		wfLoadExtension( 'MathSearch' );
 		break;
 	case 'mathml':
-		$wgServer = 'https://en.formulasearchengine.com';
+		$wgServer = 'https://mathml.formulasearchengine.com';
 		$wgDBname = 'wiki_enfse';
 		$wgSitename = 'MathML';
 		$wgLogo = "/images/mathml.png";
@@ -219,7 +303,7 @@ switch ( $wikiId ) {
 			'styles' => "mathml.css", // Stylesheet to be loaded in all skins
 			// End custom styles for vector
 			'localBasePath' => "$IP/mathml/",
-			'remoteBasePath' => "$wgScriptPath/mathml/"
+			'remoteBasePath' => "$wgScriptPath/mathml/",
 		);
 
 		function efCustomBeforePageDisplay( &$out, &$skin ) {
@@ -230,8 +314,8 @@ switch ( $wikiId ) {
 		break;
 	case 'test':
 		$wgServer = '//' . $srv;
-	    $wgShowExceptionDetails=true;
-        $wgDebugToolbar = true;
+		$wgShowExceptionDetails = true;
+		$wgDebugToolbar = true;
 		$wgEnableWikibaseRepo = true;
 		$wgEnableWikibaseClient = true;
 		require_once "$IP/extensions/Wikibase/repo/Wikibase.php";
@@ -246,6 +330,7 @@ switch ( $wikiId ) {
 }
 
 ## DEBUG
-# $wgShowExceptionDetails=true;
-# $wgDebugToolbar = true;
+/**
+$wgShowExceptionDetails=true;
+$wgDebugToolbar = true;
 ## END DEBUG **/
