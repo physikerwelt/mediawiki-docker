@@ -108,3 +108,5 @@ COPY --from=mathoid /srv /srv
 
 COPY --from=composer /composer /var/www/html
 RUN chown -R www-data:www-data /var/www/html/images
+
+ENTRYPOINT ["docker-php-entrypoint", "apache2-foreground"]

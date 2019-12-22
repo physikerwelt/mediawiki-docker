@@ -191,7 +191,7 @@ switch ( $wikiId ) {
 		$wgHashedUploadDirectory = false;
 		break;
 	case 'drmfbeta':
-		$wgServer = 'https://drmf.wmflabs.org';
+		$wgServer = 'https://drmf-beta.wmflabs.org';
 		$wgSitename = 'DRMF';
 		$wgCapitalLinks = false;
 		$wgLogo = "/images/DRMF.png";
@@ -225,6 +225,7 @@ switch ( $wikiId ) {
 					'hyperref.sty',
 					'[ids]latexml.sty',
 					'DLMFmath.sty',
+					'DRMFfcns.sty',
 				),
 				'linelength' => 90,
 			);
