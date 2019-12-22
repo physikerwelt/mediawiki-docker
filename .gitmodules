@@ -60,7 +60,7 @@
 	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/WikiEditor
 [submodule "mediawiki/extensions/Interwiki"]
 	path = mediawiki/extensions/Interwiki
-	url = ssh://gerrit.wikimedia.org:29418/mediawiki/extensions/Interwiki
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/Interwiki
 [submodule "mediawiki/extensions/SiteMatrix"]
 	path = mediawiki/extensions/SiteMatrix
-	url = ssh://gerrit.wikimedia.org:29418/mediawiki/extensions/SiteMatrix
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/SiteMatrix
