@@ -66,8 +66,8 @@ $wgDBprefix = "";
 $wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
 
 ## Shared memory settings
-$wgMainCacheType = CACHE_ACCEL;
-$wgMemCachedServers = [];
+$wgMainCacheType = CACHE_NONE;
+##$wgMemCachedServers = [];
 
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then set this to true:
@@ -284,6 +284,18 @@ switch ( $wikiId ) {
 		$wgFlaggedRevsStatsAge = false;
 		$wgGroupPermissions['sysop']['review'] = true; #allow administrators to review revisions
 		wfLoadExtension( 'MathSearch' );
+		$wgEnableWikibaseRepo = true;
+		$wgEnableWikibaseClient = true;
+		require_once "$IP/extensions/Wikibase/repo/Wikibase.php";
+		require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
+		require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
+		require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
+		$wgWBRepoSettings['siteLinkGroups'] = [ 'wikipedia', 'drmfgroup'];
+		$wgWBClientSettings['siteGlobalID'] = 'drmf';
+		// wfLoadExtension( 'Interwiki' );
+		// wfLoadExtension( 'SiteMatrix' );
+		// To grant sysops permissions to edit interwiki data
+		$wgGroupPermissions['sysop']['interwiki'] = true;
 		break;
 	case 'enfse':
 		$wgServer = 'https://en.formulasearchengine.com';
@@ -331,7 +343,9 @@ switch ( $wikiId ) {
 }
 
 ## DEBUG
-/**
+##/**
 $wgShowExceptionDetails=true;
 $wgDebugToolbar = true;
+$wgShowSQLErrors = true;
+$wgShowDBErrorBacktrace = true;
 ## END DEBUG **/
