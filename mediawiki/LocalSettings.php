@@ -163,8 +163,7 @@ if ( defined( 'MW_DB' ) ) {
 } else {
 	$srv = $_SERVER['SERVER_NAME'];
 	if ( preg_match( '/([a-z-]+)\.beta\.physikerwelt\.de/', $srv, $match ) == 1 ) {
-		$lang_code = str_replace( '-', '_', $match[1] );
-		$wgDBname = 'wiki_' . $lang_code;
+		$wgDBname = 'wiki_' . $match[1];
 		$wikiId = false;
 		$wgDBuser = "wiki";
 		$wgServer = 'https://' . $match[1] . '.beta.physikerwelt.de';
