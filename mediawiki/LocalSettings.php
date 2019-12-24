@@ -159,14 +159,16 @@ if ( defined( 'MW_DB' ) ) {
 	// Set $wikiId from the defined constant 'MW_DB' that is set by maintenance scripts.
 	$wikiId = MW_DB;
 } elseif ( !isset( $_SERVER['SERVER_NAME'] ) ) {
-	die( 'Server name not set.' );
+	die( "Server name not set.\n" );
 } else {
 	$srv = $_SERVER['SERVER_NAME'];
-	if ( preg_match( '([a-z-]+).beta.physikerwelt.de', $srv, $match ) == 1 ) {
+	if ( preg_match( '/([a-z-]+)\.beta\.physikerwelt\.de/', $srv, $match ) == 1 ) {
 		$lang_code = str_replace( '-', '_', $match[1] );
 		$wgDBname = 'wiki_' . $lang_code;
 		$wikiId = false;
+		$wgDBuser = "wiki";
 		$wgServer = 'https://' . $match[1] . '.beta.physikerwelt.de';
+		$wgLanguageCode = $match[1];
 
 	} else {
 		$wikiId = 'test';
