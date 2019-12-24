@@ -154,6 +154,7 @@ $wgMathoidCli = [
 	'-c',
 	'/srv/mathoid/config.yaml',
 ];
+
 if ( defined( 'MW_DB' ) ) {
 	// Set $wikiId from the defined constant 'MW_DB' that is set by maintenance scripts.
 	$wikiId = MW_DB;
@@ -161,190 +162,195 @@ if ( defined( 'MW_DB' ) ) {
 	die( 'Server name not set.' );
 } else {
 	$srv = $_SERVER['SERVER_NAME'];
-	if ( strpos( $srv, 'physikerwelt.de' ) !== false ) {
-		$wikiId = 'physikerwelt';
+	if ( preg_match( '([a-z-]+).beta.physikerwelt.de', $srv, $match ) == 1 ) {
+		$lang_code = str_replace( '-', '_', $match[1] );
+		$wgDBname = 'wiki_' . $lang_code;
+		$wikiId = false;
+		$wgServer = 'https://' . $match[1] . '.beta.physikerwelt.de';
+
 	} else {
-		if ( strpos( $srv, 'drmf' ) !== false ) {
-			$wikiId = 'drmfbeta';
-		} else {
-			if ( strpos( $srv, 'formulasearchengine.com' ) !== false ) {
-				$wikiId = 'enfse';
-			} else {
-				if ( strpos( $srv, 'mathml' ) !== false ) {
-					$wikiId = 'mathml';
-				} else {
-					$wikiId = 'test';
-				}
+		$wikiId = 'test';
+		$dbMap = [
+			'formulasearchengine.com' => 'enfse',
+			'mathml' => 'mathml',
+			'drmf' => 'drmfbeta',
+		];
+		foreach ( $dbMap as $urlPart => $id ) {
+			if ( strpos( $srv, $urlPart ) !== false ) {
+				$wikiId = $id;
+				$wgDBname = 'wiki_' . $id;
+				break;
 			}
+		}
+		switch ( $wikiId ) {
+			case 'physikerwelt':
+				$wgServer = 'https://wiki.physikerwelt.de';
+				$wgSitename = "PhysikWiki";
+				$wgLanguageCode = 'de';
+				enableSemantics( 'physikerwelt.de' );
+				include_once( "$IP/extensions/SemanticDrilldown/SemanticDrilldown.php" );
+				$wgLogo = "/images/PhysikWiki.png";
+				$wgHashedUploadDirectory = false;
+				break;
+			case 'drmfbeta':
+				$wgServer = 'https://drmf-beta.wmflabs.org';
+				$wgSitename = 'DRMF';
+				$wgCapitalLinks = false;
+				$wgLogo = "/images/DRMF.png";
+				$wgMetaNamespace = 'Project';
+				wfLoadExtension( 'Scribunto' );
+				$wgScribuntoDefaultEngine = 'luastandalone';
+				$wgMathValidModes[] = 'latexml'; // adding LaTeXML as rendering option
+				// Set LaTeXML as default rendering option;
+				$wgDefaultUserOptions['math'] = 'latexml';
+				// Specify the path to your LaTeXML instance that converts the \TeX commands to MathML (optional)
+				$wgMathLaTeXMLUrl = 'http://latexml:8080/convert/';
+				$wgMathDefaultLaTeXMLSetting = array(
+					'format' => 'xhtml',
+					'whatsin' => 'math',
+					'whatsout' => 'math',
+					'pmml',
+					'cmml',
+					'mathtex',
+					'nodefaultresources',
+					'preload' => array(
+						'LaTeX.pool',
+						'article.cls',
+						'amsmath.sty',
+						'amsthm.sty',
+						'amstext.sty',
+						'amssymb.sty',
+						'eucal.sty',
+						// '[dvipsnames]xcolor.sty',
+						'url.sty',
+						'hyperref.sty',
+						'[ids]latexml.sty',
+						'DLMFmath.sty',
+						'DRMFfcns.sty',
+					),
+					'linelength' => 90,
+				);
+				$wgMathMathMLUrl = 'http://mathoid:10042'; // linked docker service
+				$wgMathDisableTexFilter = 'always';
+				$wgHooks['MathFormulaPostRender'] = array( 'wfOnMathFormulaRendered' );
+				$wgGroupPermissions['*']['edit'] = false;
+				$wgGroupPermissions['*']['createaccount'] = false;
+				$wgWBRepoSettings['formatterUrlProperty'] = 'P24';
+				// See https://www.mediawiki.org/wiki/Extension_default_namespaces
+				define( "NS_SOURCE", 130 );
+				define( "NS_SOURCE_TALK", 131 );
+				define( "NS_FORMULA", 132 );
+				define( "NS_FORMULA_TALK", 133 );
+				define( "NS_CD", 134 );
+				define( "NS_CD_TALK", 135 );
+				define( "NS_DEFINITION", 136 );
+				define( "NS_DEFINITION_TALK", 137 );
+				$wgExtraNamespaces = array(
+					NS_SOURCE => "Source",
+					NS_SOURCE_TALK => "Source_talk",
+					NS_FORMULA => "Formula",
+					NS_FORMULA_TALK => "Formula_talk",
+					NS_CD => "CD",
+					NS_CD_TALK => "CD_talk",
+					NS_DEFINITION => "Definition",
+					NS_DEFINITION_TALK => "Definition_talk",
+				);
+				/**
+				 * Callback function that is called after a formula was rendered
+				 * @param MathRenderer $Renderer
+				 * @param string|null $Result reference to the rendering result
+				 * @param int $pid
+				 * @param int $eid
+				 * @return bool
+				 */
+				function wfOnMathFormulaRendered(
+					Parser $parser, MathRenderer $renderer, &$Result = null
+				) {
+					$id = $renderer->getID();
+					if ( $id ) {
+						$url = Title::newFromText( 'Formula:' . $id )->getLocalURL();
+						$Result =
+							preg_replace( "#</semantics>#", "<annotation encoding=\"OpenMath\" >" .
+															$renderer->getUserInputTex() .
+															"</annotation>\n</semantics>",
+								$Result );
+						$Result =
+							'<a href="' . $url . '" id="' . $id . '" style="color:inherit;">' .
+							$Result . '</a>';
+					}
+
+					return true;
+				}
+
+				$smwgNamespacesWithSemanticLinks[NS_FORMULA] = true;
+				$smwgNamespacesWithSemanticLinks[NS_CD] = true;
+				$wgFlaggedRevsStatsAge = false;
+				$wgGroupPermissions['sysop']['review'] =
+					true; #allow administrators to review revisions
+				wfLoadExtension( 'MathSearch' );
+				$wgEnableWikibaseRepo = true;
+				$wgEnableWikibaseClient = true;
+				require_once "$IP/extensions/Wikibase/repo/Wikibase.php";
+				require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
+				require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
+				require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
+				$wgWBRepoSettings['siteLinkGroups'] = [ 'wikipedia', 'drmfgroup' ];
+				$wgWBClientSettings['siteGlobalID'] = 'drmf';
+				// wfLoadExtension( 'Interwiki' );
+				// wfLoadExtension( 'SiteMatrix' );
+				// To grant sysops permissions to edit interwiki data
+				$wgGroupPermissions['sysop']['interwiki'] = true;
+				break;
+			case 'enfse':
+				$wgServer = 'https://en.formulasearchengine.com';
+				$wgSitename = 'formulasearchengine';
+				$wgLogo = "/images/fse_132.png";
+				$wgLogoHD = [
+					"1.5x" => "/images/fse_202.png",
+					"2x" => "/images/fse_270.png",
+				];
+				wfLoadExtension( 'MathSearch' );
+				break;
+			case 'mathml':
+				$wgServer = 'https://mathml.formulasearchengine.com';
+				$wgDBname = 'wiki_enfse';
+				$wgSitename = 'MathML';
+				$wgLogo = "/images/mathml.png";
+				$wgResourceModules['mathml.customizations'] = array(
+					'styles' => "mathml.css", // Stylesheet to be loaded in all skins
+					// End custom styles for vector
+					'localBasePath' => "$IP/mathml/",
+					'remoteBasePath' => "$wgScriptPath/mathml/",
+				);
+
+				function efCustomBeforePageDisplay( &$out, &$skin ) {
+					$out->addModules( array( 'mathml.customizations' ) );
+				}
+
+				$wgHooks['BeforePageDisplay'][] = 'efCustomBeforePageDisplay';
+				break;
+			case 'test':
+				$wgServer = '//' . $srv;
+				$wgShowExceptionDetails = true;
+				$wgDebugToolbar = true;
+				$wgEnableWikibaseRepo = true;
+				$wgEnableWikibaseClient = true;
+				require_once "$IP/extensions/Wikibase/repo/Wikibase.php";
+				require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
+				require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
+				require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
+				break;
+			default:
+
+				# code...
+				break;
 		}
 	}
-}
-$wgDBname = 'wiki_' . $wikiId;
-switch ( $wikiId ) {
-	case 'physikerwelt':
-		$wgServer = 'https://wiki.physikerwelt.de';
-		$wgSitename = "PhysikWiki";
-		$wgLanguageCode = 'de';
-		enableSemantics( 'physikerwelt.de' );
-		include_once( "$IP/extensions/SemanticDrilldown/SemanticDrilldown.php" );
-		$wgLogo = "/images/PhysikWiki.png";
-		$wgHashedUploadDirectory = false;
-		break;
-	case 'drmfbeta':
-		$wgServer = 'https://drmf-beta.wmflabs.org';
-		$wgSitename = 'DRMF';
-		$wgCapitalLinks = false;
-		$wgLogo = "/images/DRMF.png";
-		$wgMetaNamespace = 'Project';
-		wfLoadExtension( 'Scribunto' );
-		$wgScribuntoDefaultEngine = 'luastandalone';
-		$wgMathValidModes[] = 'latexml'; // adding LaTeXML as rendering option
-		// Set LaTeXML as default rendering option;
-		$wgDefaultUserOptions['math'] = 'latexml';
-		// Specify the path to your LaTeXML instance that converts the \TeX commands to MathML (optional)
-		$wgMathLaTeXMLUrl = 'http://latexml:8080/convert/';
-		$wgMathDefaultLaTeXMLSetting =
-			array(
-				'format' => 'xhtml',
-				'whatsin' => 'math',
-				'whatsout' => 'math',
-				'pmml',
-				'cmml',
-				'mathtex',
-				'nodefaultresources',
-				'preload' => array(
-					'LaTeX.pool',
-					'article.cls',
-					'amsmath.sty',
-					'amsthm.sty',
-					'amstext.sty',
-					'amssymb.sty',
-					'eucal.sty',
-					// '[dvipsnames]xcolor.sty',
-					'url.sty',
-					'hyperref.sty',
-					'[ids]latexml.sty',
-					'DLMFmath.sty',
-					'DRMFfcns.sty',
-				),
-				'linelength' => 90,
-			);
-		$wgMathMathMLUrl = 'http://mathoid:10042'; // linked docker service
-		$wgMathDisableTexFilter = 'always';
-		$wgHooks['MathFormulaPostRender'] = array( 'wfOnMathFormulaRendered' );
-		$wgGroupPermissions['*']['edit'] = false;
-		$wgGroupPermissions['*']['createaccount'] = false;
-		$wgWBRepoSettings['formatterUrlProperty'] = 'P24';
-		// See https://www.mediawiki.org/wiki/Extension_default_namespaces
-		define( "NS_SOURCE", 130 );
-		define( "NS_SOURCE_TALK", 131 );
-		define( "NS_FORMULA", 132 );
-		define( "NS_FORMULA_TALK", 133 );
-		define( "NS_CD", 134 );
-		define( "NS_CD_TALK", 135 );
-		define( "NS_DEFINITION", 136 );
-		define( "NS_DEFINITION_TALK", 137 );
-		$wgExtraNamespaces = array(
-			NS_SOURCE => "Source",
-			NS_SOURCE_TALK => "Source_talk",
-			NS_FORMULA => "Formula",
-			NS_FORMULA_TALK => "Formula_talk",
-			NS_CD => "CD",
-			NS_CD_TALK => "CD_talk",
-			NS_DEFINITION => "Definition",
-			NS_DEFINITION_TALK => "Definition_talk",
-		);
-		/**
-		 * Callback function that is called after a formula was rendered
-		 * @param MathRenderer $Renderer
-		 * @param string|null $Result reference to the rendering result
-		 * @param int $pid
-		 * @param int $eid
-		 * @return bool
-		 */
-		function wfOnMathFormulaRendered( Parser $parser, MathRenderer $renderer, &$Result = null
-		) {
-			$id = $renderer->getID();
-			if ( $id ) {
-				$url = Title::newFromText( 'Formula:' . $id )->getLocalURL();
-				$Result =
-					preg_replace( "#</semantics>#",
-						"<annotation encoding=\"OpenMath\" >" . $renderer->getUserInputTex() .
-						"</annotation>\n</semantics>", $Result );
-				$Result =
-					'<a href="' . $url . '" id="' . $id . '" style="color:inherit;">' . $Result .
-					'</a>';
-			}
-
-			return true;
-		}
-
-		$smwgNamespacesWithSemanticLinks[NS_FORMULA] = true;
-		$smwgNamespacesWithSemanticLinks[NS_CD] = true;
-		$wgFlaggedRevsStatsAge = false;
-		$wgGroupPermissions['sysop']['review'] = true; #allow administrators to review revisions
-		wfLoadExtension( 'MathSearch' );
-		$wgEnableWikibaseRepo = true;
-		$wgEnableWikibaseClient = true;
-		require_once "$IP/extensions/Wikibase/repo/Wikibase.php";
-		require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
-		require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
-		require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
-		$wgWBRepoSettings['siteLinkGroups'] = [ 'wikipedia', 'drmfgroup'];
-		$wgWBClientSettings['siteGlobalID'] = 'drmf';
-		// wfLoadExtension( 'Interwiki' );
-		// wfLoadExtension( 'SiteMatrix' );
-		// To grant sysops permissions to edit interwiki data
-		$wgGroupPermissions['sysop']['interwiki'] = true;
-		break;
-	case 'enfse':
-		$wgServer = 'https://en.formulasearchengine.com';
-		$wgSitename = 'formulasearchengine';
-		$wgLogo = "/images/fse_132.png";
-		$wgLogoHD = [
-			"1.5x" => "/images/fse_202.png",
-			"2x" => "/images/fse_270.png",
-		];
-		wfLoadExtension( 'MathSearch' );
-		break;
-	case 'mathml':
-		$wgServer = 'https://mathml.formulasearchengine.com';
-		$wgDBname = 'wiki_enfse';
-		$wgSitename = 'MathML';
-		$wgLogo = "/images/mathml.png";
-		$wgResourceModules['mathml.customizations'] = array(
-			'styles' => "mathml.css", // Stylesheet to be loaded in all skins
-			// End custom styles for vector
-			'localBasePath' => "$IP/mathml/",
-			'remoteBasePath' => "$wgScriptPath/mathml/",
-		);
-
-		function efCustomBeforePageDisplay( &$out, &$skin ) {
-			$out->addModules( array( 'mathml.customizations' ) );
-		}
-
-		$wgHooks['BeforePageDisplay'][] = 'efCustomBeforePageDisplay';
-		break;
-	case 'test':
-		$wgServer = '//' . $srv;
-		$wgShowExceptionDetails = true;
-		$wgDebugToolbar = true;
-		$wgEnableWikibaseRepo = true;
-		$wgEnableWikibaseClient = true;
-		require_once "$IP/extensions/Wikibase/repo/Wikibase.php";
-		require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
-		require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
-		require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
-		break;
-	default:
-
-		# code...
-		break;
 }
 
 ## DEBUG
 ##/**
-$wgShowExceptionDetails=true;
+$wgShowExceptionDetails = true;
 $wgDebugToolbar = true;
 $wgShowSQLErrors = true;
 $wgShowDBErrorBacktrace = true;
