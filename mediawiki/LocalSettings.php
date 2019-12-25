@@ -168,7 +168,8 @@ if ( defined( 'MW_DB' ) ) {
 		$wgDBuser = "wiki";
 		$wgServer = 'https://' . $match[1] . '.beta.physikerwelt.de';
 		$wgLanguageCode = $match[1];
-
+		//$wgDefaultUserOptions['math'] = 'source';
+		$wgMathoidCli = false;
 	} else {
 		$wikiId = 'test';
 		$dbMap = [
