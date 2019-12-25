@@ -162,11 +162,12 @@ if ( defined( 'MW_DB' ) ) {
 	die( "Server name not set.\n" );
 } else {
 	$srv = $_SERVER['SERVER_NAME'];
-	if ( preg_match( '/([a-z-]+)\.beta\.physikerwelt\.de/', $srv, $match ) == 1 ) {
+	if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv, $match ) == 1
+	) {
 		$wgDBname = 'wiki_' . $match[1];
 		$wikiId = false;
 		$wgDBuser = "wiki";
-		$wgServer = 'https://' . $match[1] . '.beta.physikerwelt.de';
+		$wgServer = 'https://' . $match[1] . '.beta.math.wmflabs.org';
 		$wgLanguageCode = $match[1];
 		//$wgDefaultUserOptions['math'] = 'source';
 		$wgMathoidCli = false;
