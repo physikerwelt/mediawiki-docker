@@ -171,6 +171,8 @@ if ( defined( 'MW_DB' ) ) {
 		$wgLanguageCode = $match[1];
 		//$wgDefaultUserOptions['math'] = 'source';
 		$wgMathoidCli = false;
+		$wgDisableTitleConversion=true;
+		$wgDisableLangConversion=true;
 	} else {
 		$wikiId = 'test';
 		$dbMap = [
