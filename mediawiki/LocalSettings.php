@@ -173,6 +173,14 @@ if ( defined( 'MW_DB' ) ) {
 		$wgMathoidCli = false;
 		$wgDisableTitleConversion=true;
 		$wgDisableLangConversion=true;
+		$wgEnableWikibaseRepo = true;
+		$wgEnableWikibaseClient = true;
+		require_once "$IP/extensions/Wikibase/repo/Wikibase.php";
+		require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
+		require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
+		require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
+		// $wgWBRepoSettings['siteLinkGroups'] = [ 'wikipedia', 'drmfgroup' ];
+		//$wgWBClientSettings['siteGlobalID'] = $match[1];
 	} else {
 		$wikiId = 'test';
 		$dbMap = [
