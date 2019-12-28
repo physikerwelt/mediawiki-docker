@@ -313,6 +313,8 @@ if ( defined( 'MW_DB' ) ) {
 				// wfLoadExtension( 'SiteMatrix' );
 				// To grant sysops permissions to edit interwiki data
 				$wgGroupPermissions['sysop']['interwiki'] = true;
+				wfLoadExtension('OAuth');
+				$wgGroupPermissions['sysop']['mwoauthproposeconsumer'] = true;
 				break;
 			case 'enfse':
 				$wgServer = 'https://en.formulasearchengine.com';
