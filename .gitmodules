@@ -67,3 +67,6 @@
 [submodule "mediawiki/extensions/OAuth"]
 	path = mediawiki/extensions/OAuth
 	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/OAuth
+[submodule "mediawiki/extensions/DataTransfer"]
+	path = mediawiki/extensions/DataTransfer
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/DataTransfer

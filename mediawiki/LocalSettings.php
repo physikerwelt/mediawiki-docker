@@ -315,6 +315,7 @@ if ( defined( 'MW_DB' ) ) {
 				$wgGroupPermissions['sysop']['interwiki'] = true;
 				wfLoadExtension('OAuth');
 				$wgGroupPermissions['sysop']['mwoauthproposeconsumer'] = true;
+				wfLoadExtension( 'DataTransfer' );
 				break;
 			case 'enfse':
 				$wgServer = 'https://en.formulasearchengine.com';
