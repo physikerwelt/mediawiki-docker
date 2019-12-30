@@ -240,6 +240,7 @@ if ( defined( 'MW_DB' ) ) {
 						'[ids]latexml.sty',
 						'DLMFmath.sty',
 						'DRMFfcns.sty',
+						'DLMFsupport.sty.ltxml'
 					),
 					'linelength' => 90,
 				);
