@@ -249,7 +249,7 @@ if ( defined( 'MW_DB' ) ) {
 				$wgHooks['MathFormulaPostRender'] = array( 'wfOnMathFormulaRendered' );
 				$wgGroupPermissions['*']['edit'] = false;
 				$wgGroupPermissions['*']['createaccount'] = false;
-				$wgWBRepoSettings['formatterUrlProperty'] = 'P24';
+				$wgWBRepoSettings['formatterUrlProperty'] = 'P10';
 				// See https://www.mediawiki.org/wiki/Extension_default_namespaces
 				define( "NS_SOURCE", 130 );
 				define( "NS_SOURCE_TALK", 131 );
