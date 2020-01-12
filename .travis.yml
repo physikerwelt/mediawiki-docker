@@ -7,4 +7,4 @@ script:
   - docker-compose build
   - docker-compose up -d
   - sleep 15
-  - curl -v http://localhost:8080/index.php/Main_Page
+  - curl -v http://localhost/index.php/Main_Page
