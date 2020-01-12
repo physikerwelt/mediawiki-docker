@@ -352,6 +352,7 @@ if ( defined( 'MW_DB' ) ) {
 				$wgDebugToolbar = true;
 				$wgEnableWikibaseRepo = true;
 				$wgEnableWikibaseClient = true;
+				wfLoadExtension( 'MathSearch' );
 				require_once "$IP/extensions/Wikibase/repo/Wikibase.php";
 				require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
 				require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
