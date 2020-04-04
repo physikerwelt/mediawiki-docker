@@ -187,6 +187,7 @@ if ( defined( 'MW_DB' ) ) {
 			'formulasearchengine.com' => 'enfse',
 			'mathml' => 'mathml',
 			'drmf' => 'drmfbeta',
+			'wiki' => 'physikerwelt'
 		];
 		foreach ( $dbMap as $urlPart => $id ) {
 			if ( strpos( $srv, $urlPart ) !== false ) {
