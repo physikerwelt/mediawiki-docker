@@ -4,7 +4,7 @@
 Run `git submodule update --recursive --remote` in the root folder.
 
 ## Local development
-Create `docker-compose.overwrite.yml`
+Create `docker-compose.override.yml`
 ```docker-compose
 version: '3.4'
 services:
