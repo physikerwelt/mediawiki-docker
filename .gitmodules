@@ -70,3 +70,6 @@
 [submodule "mediawiki/extensions/DataTransfer"]
 	path = mediawiki/extensions/DataTransfer
 	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/DataTransfer
+[submodule "mediawiki/extensions/Flow"]
+	path = mediawiki/extensions/Flow
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/Flow
