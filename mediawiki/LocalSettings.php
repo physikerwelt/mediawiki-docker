@@ -210,6 +210,14 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			];
 			wfLoadExtension( 'Flow' );
 			$wgNamespaceContentModels[NS_MAIN] = 'flow-board';
+			$wgEnableWikibaseRepo = true;
+			$wgEnableWikibaseClient = true;
+			require_once "$IP/extensions/Wikibase/repo/Wikibase.php";
+			require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
+			require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
+			require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
+			$wgWBRepoSettings[ 'siteLinkGroups' ] = [ 'wikipedia', 'arqmath' ];
+			$wgWBClientSettings[ 'siteGlobalID' ] = 'arqmath20';
 			break;
 		case 'physikerwelt':
 			$wgServer = 'https://wiki.physikerwelt.de';
