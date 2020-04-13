@@ -209,7 +209,7 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 				"2x" => "/images/fse_270.png",
 			];
 			wfLoadExtension( 'Flow' );
-			$wgNamespaceContentModels[NS_MAIN] = 'flow-board';
+			$wgNamespaceContentModels[ NS_MAIN ] = 'flow-board';
 			$wgEnableWikibaseRepo = true;
 			$wgEnableWikibaseClient = true;
 			require_once "$IP/extensions/Wikibase/repo/Wikibase.php";
@@ -218,6 +218,10 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
 			$wgWBRepoSettings[ 'siteLinkGroups' ] = [ 'wikipedia', 'arqmath' ];
 			$wgWBClientSettings[ 'siteGlobalID' ] = 'arqmath20';
+			$wgMathWikibasePropertyIdDefiningFormula = "P1";
+			$wgMathWikibasePropertyIdHasPart = "P2";
+			$wgMathWikibasePropertyIdQuantitySymbol = "P3";
+			$wgWBRepoSettings[ 'formatterUrlProperty' ] = 'P4';
 			break;
 		case 'physikerwelt':
 			$wgServer = 'https://wiki.physikerwelt.de';
@@ -382,8 +386,8 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			wfLoadExtension( 'MathSearch' );
 			wfLoadExtension( 'Flow' );
 			$wgGroupPermissions[ '*' ][ 'edit' ] = true;
-			$wgNamespaceContentModels[NS_TALK] = 'flow-board';
-			$wgNamespaceContentModels[NS_USER_TALK] = 'flow-board';
+			$wgNamespaceContentModels[ NS_TALK ] = 'flow-board';
+			$wgNamespaceContentModels[ NS_USER_TALK ] = 'flow-board';
 			require_once "$IP/extensions/Wikibase/repo/Wikibase.php";
 			require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
 			require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
