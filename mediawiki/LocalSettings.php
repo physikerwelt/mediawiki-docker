@@ -222,6 +222,7 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			$wgMathWikibasePropertyIdHasPart = "P2";
 			$wgMathWikibasePropertyIdQuantitySymbol = "P3";
 			$wgWBRepoSettings[ 'formatterUrlProperty' ] = 'P4';
+			$wgGroupPermissions['SchuBot']['flow-delete'] = true;
 			break;
 		case 'physikerwelt':
 			$wgServer = 'https://wiki.physikerwelt.de';
