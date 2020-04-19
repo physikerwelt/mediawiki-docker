@@ -186,6 +186,7 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 	$wikiId = 'test';
 	$dbMap = [
 		'arq20' => 'arqmath20',
+		'wikibase.svc' => 'arqmath20',
 		'formulasearchengine.com' => 'enfse',
 		'mathml' => 'mathml',
 		'drmf' => 'drmfbeta',
