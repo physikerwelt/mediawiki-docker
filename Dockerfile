@@ -108,5 +108,7 @@ COPY --from=mathoid /srv /srv
 
 COPY --from=composer /composer /var/www/html
 RUN chown -R www-data:www-data /var/www/html/images
+# Fix for for T250504
+RUN ln -s /var/www/html /var/www/html/w
 
 ENTRYPOINT ["docker-php-entrypoint", "apache2-foreground"]
