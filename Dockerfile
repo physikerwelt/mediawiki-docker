@@ -110,5 +110,6 @@ COPY --from=composer /composer /var/www/html
 RUN chown -R www-data:www-data /var/www/html/images
 # Fix for for T250504
 RUN ln -s /var/www/html /var/www/html/w
+COPY htaccess /var/www/html/.htaccess
 
 ENTRYPOINT ["docker-php-entrypoint", "apache2-foreground"]
