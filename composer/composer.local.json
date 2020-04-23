@@ -7,7 +7,8 @@
     "merge-plugin": {
       "include": [
         "extensions/Wikibase/composer.json",
-        "extensions/Flow/composer.json"
+        "extensions/Flow/composer.json",
+        "extensions/TemplateStyles/composer.json"
       ]
     }
   }

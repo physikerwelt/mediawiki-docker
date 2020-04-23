@@ -73,3 +73,6 @@
 [submodule "mediawiki/extensions/Flow"]
 	path = mediawiki/extensions/Flow
 	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/Flow
+[submodule "mediawiki/extensions/TemplateStyles"]
+	path = mediawiki/extensions/TemplateStyles
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/TemplateStyles
