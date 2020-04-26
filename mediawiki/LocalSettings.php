@@ -227,6 +227,11 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			$wgMetaNamespace = 'Project';
 			wfLoadExtension( 'Scribunto' );
 			$wgScribuntoDefaultEngine = 'luastandalone';
+			$wgMainCacheType = CACHE_MEMCACHED;
+			$wgParserCacheType = CACHE_MEMCACHED; # optional
+			$wgMessageCacheType = CACHE_MEMCACHED; # optional
+			$wgSessionCacheType = CACHE_MEMCACHED; # optional
+			$wgMemCachedServers = ['memcached:11211'];
 			break;
 		case 'physikerwelt':
 			$wgServer = 'https://wiki.physikerwelt.de';
