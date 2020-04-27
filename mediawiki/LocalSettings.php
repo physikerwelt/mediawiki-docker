@@ -232,6 +232,12 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			$wgMessageCacheType = CACHE_MEMCACHED; # optional
 			$wgSessionCacheType = CACHE_MEMCACHED; # optional
 			$wgMemCachedServers = ['memcached:11211'];
+			$wgWBRepoSettings[ 'siteLinkGroups' ] = [ 'wikipedia', 'fse' ];
+			$wgWBClientSettings[ 'siteGlobalID' ] = 'arq20';
+			wfLoadExtension( 'Interwiki' );
+			 wfLoadExtension( 'SiteMatrix' );
+			// To grant sysops permissions to edit interwiki data
+			$wgGroupPermissions[ 'sysop' ][ 'interwiki' ] = true;
 			break;
 		case 'physikerwelt':
 			$wgServer = 'https://wiki.physikerwelt.de';
