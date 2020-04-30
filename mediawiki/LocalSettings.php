@@ -217,8 +217,9 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
 			require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
 			require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
-			$wgWBRepoSettings[ 'siteLinkGroups' ] = [ 'wikipedia', 'arqmath' ];
+			$wgWBRepoSettings[ 'siteLinkGroups' ] = [ 'wikipedia', 'fse' ];
 			$wgWBClientSettings[ 'siteGlobalID' ] = 'arqmath20';
+			$wgWBClientSettings['siteGroup'] = 'fse';
 			$wgMathWikibasePropertyIdDefiningFormula = "P1";
 			$wgMathWikibasePropertyIdHasPart = "P2";
 			$wgMathWikibasePropertyIdQuantitySymbol = "P3";
@@ -232,10 +233,6 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			$wgMessageCacheType = CACHE_MEMCACHED; # optional
 			$wgSessionCacheType = CACHE_MEMCACHED; # optional
 			$wgMemCachedServers = ['memcached:11211'];
-			$wgWBRepoSettings[ 'siteLinkGroups' ] = [ 'wikipedia', 'fse' ];
-			$wgWBClientSettings[ 'siteGlobalID' ] = 'arq20';
-			wfLoadExtension( 'Interwiki' );
-			 wfLoadExtension( 'SiteMatrix' );
 			// To grant sysops permissions to edit interwiki data
 			$wgGroupPermissions[ 'sysop' ][ 'interwiki' ] = true;
 			break;
