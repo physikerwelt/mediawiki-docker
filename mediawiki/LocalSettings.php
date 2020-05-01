@@ -217,9 +217,10 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
 			require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
 			require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
-			$wgWBRepoSettings[ 'siteLinkGroups' ] = [ 'wikipedia', 'fse' ];
+			$wgWBRepoSettings[ 'siteLinkGroups' ] = [ 'wikipedia' ];
 			$wgWBClientSettings[ 'siteGlobalID' ] = 'arqmath20';
-			$wgWBClientSettings['siteGroup'] = 'fse';
+			// insert site with
+			// php addSite.php --filepath=https://arq20.formulasearchengine.com/w/\$1 --pagepath=https://arq20.formulasearchengine.com/wiki/\$1 --language en --interwiki-id arqmath20wiki arqmath20 wikipedia
 			$wgMathWikibasePropertyIdDefiningFormula = "P1";
 			$wgMathWikibasePropertyIdHasPart = "P2";
 			$wgMathWikibasePropertyIdQuantitySymbol = "P3";
