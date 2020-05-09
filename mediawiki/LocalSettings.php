@@ -117,8 +117,8 @@ $wgRightsIcon = "$wgResourceBasePath/resources/assets/licenses/cc-by.png";
 $wgDiff3 = "/usr/bin/diff3";
 
 # The following permissions were set based on your choice in the installer
-$wgGroupPermissions[ '*' ][ 'createaccount' ] = false;
-$wgGroupPermissions[ '*' ][ 'edit' ] = false;
+$wgGroupPermissions['*']['createaccount'] = false;
+$wgGroupPermissions['*']['edit'] = false;
 
 ## Default skin: you can change the default skin. Use the internal symbolic
 ## names, ie 'vector', 'monobook':
@@ -158,18 +158,17 @@ $wgMathoidCli = [
 if ( defined( 'MW_DB' ) ) {
 	// Set $wikiId from the defined constant 'MW_DB' that is set by maintenance scripts.
 	$wikiId = MW_DB;
-} elseif ( !isset( $_SERVER[ 'SERVER_NAME' ] ) ) {
+} elseif ( !isset( $_SERVER['SERVER_NAME'] ) ) {
 	die( "Server name not set.\n" );
 }
 
-$srv = $_SERVER[ 'SERVER_NAME' ];
-if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv, $match ) == 1
-) {
-	$wgDBname = 'wiki_' . $match[ 1 ];
+$srv = $_SERVER['SERVER_NAME'];
+if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv, $match ) == 1 ) {
+	$wgDBname = 'wiki_' . $match[1];
 	$wikiId = false;
 	$wgDBuser = "wiki";
-	$wgServer = 'https://' . $match[ 1 ] . '.beta.math.wmflabs.org';
-	$wgLanguageCode = $match[ 1 ];
+	$wgServer = 'https://' . $match[1] . '.beta.math.wmflabs.org';
+	$wgLanguageCode = $match[1];
 	//$wgDefaultUserOptions['math'] = 'source';
 	$wgMathoidCli = false;
 	$wgDisableTitleConversion = true;
@@ -191,7 +190,7 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 		'mathml' => 'mathml',
 		'drmf' => 'drmfbeta',
 		'wiki' => 'physikerwelt',
-		'localhost' => 'test'
+		'localhost' => 'test',
 	];
 	foreach ( $dbMap as $urlPart => $id ) {
 		if ( strpos( $srv, $urlPart ) !== false ) {
@@ -210,21 +209,21 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 				"2x" => "/images/fse_270.png",
 			];
 			wfLoadExtension( 'Flow' );
-			$wgNamespaceContentModels[ NS_MAIN ] = 'flow-board';
+			$wgNamespaceContentModels[NS_MAIN] = 'flow-board';
 			$wgEnableWikibaseRepo = true;
 			$wgEnableWikibaseClient = true;
 			require_once "$IP/extensions/Wikibase/repo/Wikibase.php";
 			require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
 			require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
 			require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
-			$wgWBRepoSettings[ 'siteLinkGroups' ] = [ 'wikipedia' ];
-			$wgWBClientSettings[ 'siteGlobalID' ] = 'arqmath20';
+			$wgWBRepoSettings['siteLinkGroups'] = [ 'wikipedia' ];
+			$wgWBClientSettings['siteGlobalID'] = 'arqmath20';
 			// insert site with
 			// php addSite.php --filepath=https://arq20.formulasearchengine.com/w/\$1 --pagepath=https://arq20.formulasearchengine.com/wiki/\$1 --language en --interwiki-id arqmath20wiki arqmath20 wikipedia
 			$wgMathWikibasePropertyIdDefiningFormula = "P1";
 			$wgMathWikibasePropertyIdHasPart = "P2";
 			$wgMathWikibasePropertyIdQuantitySymbol = "P3";
-			$wgWBRepoSettings[ 'formatterUrlProperty' ] = 'P4';
+			$wgWBRepoSettings['formatterUrlProperty'] = 'P4';
 			$wgGroupPermissions['SchuBot']['flow-delete'] = true;
 			$wgMetaNamespace = 'Project';
 			wfLoadExtension( 'Scribunto' );
@@ -233,16 +232,16 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			$wgParserCacheType = CACHE_MEMCACHED; # optional
 			$wgMessageCacheType = CACHE_MEMCACHED; # optional
 			$wgSessionCacheType = CACHE_MEMCACHED; # optional
-			$wgMemCachedServers = ['memcached:11211'];
+			$wgMemCachedServers = [ 'memcached:11211' ];
 			// To grant sysops permissions to edit interwiki data
-			$wgGroupPermissions[ 'sysop' ][ 'interwiki' ] = true;
+			$wgGroupPermissions['sysop']['interwiki'] = true;
 			break;
 		case 'physikerwelt':
 			$wgServer = 'https://wiki.physikerwelt.de';
 			$wgSitename = "PhysikWiki";
 			$wgLanguageCode = 'de';
 			enableSemantics( 'physikerwelt.de' );
-			include_once("$IP/extensions/SemanticDrilldown/SemanticDrilldown.php");
+			include_once( "$IP/extensions/SemanticDrilldown/SemanticDrilldown.php" );
 			$wgLogo = "/images/PhysikWiki.png";
 			$wgHashedUploadDirectory = false;
 			break;
@@ -256,7 +255,7 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			$wgScribuntoDefaultEngine = 'luastandalone';
 			$wgMathValidModes[] = 'latexml'; // adding LaTeXML as rendering option
 			// Set LaTeXML as default rendering option;
-			$wgDefaultUserOptions[ 'math' ] = 'latexml';
+			$wgDefaultUserOptions['math'] = 'latexml';
 			// Specify the path to your LaTeXML instance that converts the \TeX commands to MathML (optional)
 			$wgMathLaTeXMLUrl = 'http://latexml:8080/convert/';
 			$wgMathDefaultLaTeXMLSetting = array(
@@ -281,16 +280,16 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 					'[ids]latexml.sty',
 					'DLMFmath.sty',
 					'DRMFfcns.sty',
-					'DLMFsupport.sty.ltxml'
+					'DLMFsupport.sty.ltxml',
 				),
 				'linelength' => 90,
 			);
 			$wgMathMathMLUrl = 'http://mathoid:10042'; // linked docker service
 			$wgMathDisableTexFilter = 'always';
-			$wgHooks[ 'MathFormulaPostRender' ] = array( 'wfOnMathFormulaRendered' );
-			$wgGroupPermissions[ '*' ][ 'edit' ] = false;
-			$wgGroupPermissions[ '*' ][ 'createaccount' ] = false;
-			$wgWBRepoSettings[ 'formatterUrlProperty' ] = 'P10';
+			$wgHooks['MathFormulaPostRender'] = array( 'wfOnMathFormulaRendered' );
+			$wgGroupPermissions['*']['edit'] = false;
+			$wgGroupPermissions['*']['createaccount'] = false;
+			$wgWBRepoSettings['formatterUrlProperty'] = 'P10';
 			// See https://www.mediawiki.org/wiki/Extension_default_namespaces
 			define( "NS_SOURCE", 130 );
 			define( "NS_SOURCE_TALK", 131 );
@@ -320,16 +319,14 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			 */
 			function wfOnMathFormulaRendered(
 				Parser $parser, MathRenderer $renderer, &$Result = null
-			)
-			{
+			) {
 				$id = $renderer->getID();
 				if ( $id ) {
 					$url = Title::newFromText( 'Formula:' . $id )->getLocalURL();
 					$Result =
-						preg_replace( "#</semantics>#", "<annotation encoding=\"OpenMath\" >" .
-							$renderer->getUserInputTex() .
-							"</annotation>\n</semantics>",
-							$Result );
+						preg_replace( "#</semantics>#",
+							"<annotation encoding=\"OpenMath\" >" . $renderer->getUserInputTex() .
+							"</annotation>\n</semantics>", $Result );
 					$Result =
 						'<a href="' . $url . '" id="' . $id . '" style="color:inherit;">' .
 						$Result . '</a>';
@@ -338,11 +335,10 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 				return true;
 			}
 
-			$smwgNamespacesWithSemanticLinks[ NS_FORMULA ] = true;
-			$smwgNamespacesWithSemanticLinks[ NS_CD ] = true;
+			$smwgNamespacesWithSemanticLinks[NS_FORMULA] = true;
+			$smwgNamespacesWithSemanticLinks[NS_CD] = true;
 			$wgFlaggedRevsStatsAge = false;
-			$wgGroupPermissions[ 'sysop' ][ 'review' ] =
-				true; #allow administrators to review revisions
+			$wgGroupPermissions['sysop']['review'] = true; #allow administrators to review revisions
 			wfLoadExtension( 'MathSearch' );
 			$wgEnableWikibaseRepo = true;
 			$wgEnableWikibaseClient = true;
@@ -350,14 +346,14 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
 			require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
 			require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
-			$wgWBRepoSettings[ 'siteLinkGroups' ] = [ 'wikipedia', 'drmfgroup' ];
-			$wgWBClientSettings[ 'siteGlobalID' ] = 'drmf';
+			$wgWBRepoSettings['siteLinkGroups'] = [ 'wikipedia', 'drmfgroup' ];
+			$wgWBClientSettings['siteGlobalID'] = 'drmf';
 			// wfLoadExtension( 'Interwiki' );
 			// wfLoadExtension( 'SiteMatrix' );
 			// To grant sysops permissions to edit interwiki data
-			$wgGroupPermissions[ 'sysop' ][ 'interwiki' ] = true;
+			$wgGroupPermissions['sysop']['interwiki'] = true;
 			wfLoadExtension( 'OAuth' );
-			$wgGroupPermissions[ 'sysop' ][ 'mwoauthproposeconsumer' ] = true;
+			$wgGroupPermissions['sysop']['mwoauthproposeconsumer'] = true;
 			wfLoadExtension( 'DataTransfer' );
 			break;
 		case 'enfse':
@@ -375,19 +371,18 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			$wgDBname = 'wiki_enfse';
 			$wgSitename = 'MathML';
 			$wgLogo = "/images/mathml.png";
-			$wgResourceModules[ 'mathml.customizations' ] = array(
+			$wgResourceModules['mathml.customizations'] = array(
 				'styles' => "mathml.css", // Stylesheet to be loaded in all skins
 				// End custom styles for vector
 				'localBasePath' => "$IP/mathml/",
 				'remoteBasePath' => "$wgScriptPath/mathml/",
 			);
 
-			function efCustomBeforePageDisplay( &$out, &$skin )
-			{
+			function efCustomBeforePageDisplay( &$out, &$skin ) {
 				$out->addModules( array( 'mathml.customizations' ) );
 			}
 
-			$wgHooks[ 'BeforePageDisplay' ][] = 'efCustomBeforePageDisplay';
+			$wgHooks['BeforePageDisplay'][] = 'efCustomBeforePageDisplay';
 			break;
 		case 'test':
 			$wgServer = '//' . $srv;
@@ -399,16 +394,21 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			$wgEnableWikibaseClient = true;
 			wfLoadExtension( 'MathSearch' );
 			wfLoadExtension( 'Flow' );
-			$wgGroupPermissions[ '*' ][ 'edit' ] = true;
-			$wgNamespaceContentModels[ NS_TALK ] = 'flow-board';
-			$wgNamespaceContentModels[ NS_USER_TALK ] = 'flow-board';
+			$wgGroupPermissions['*']['edit'] = true;
+			$wgNamespaceContentModels[NS_TALK] = 'flow-board';
+			$wgNamespaceContentModels[NS_USER_TALK] = 'flow-board';
 			require_once "$IP/extensions/Wikibase/repo/Wikibase.php";
 			require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
 			require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
 			require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
+			$wgProfiler = [
+				'class' => 'ProfilerXhprof',
+				'output' => 'ProfilerOutputDump',
+				'outputDir' => '/tmp/prof',
+			];
+			$wgDebugLogFile = "php://stdout";
 			break;
 		default:
 			break;
 	}
 }
-
