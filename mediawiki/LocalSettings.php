@@ -235,6 +235,7 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			$wgMemCachedServers = [ 'memcached:11211' ];
 			// To grant sysops permissions to edit interwiki data
 			$wgGroupPermissions['sysop']['interwiki'] = true;
+			wfLoadExtension( 'MathSearch' );
 			break;
 		case 'physikerwelt':
 			$wgServer = 'https://wiki.physikerwelt.de';
