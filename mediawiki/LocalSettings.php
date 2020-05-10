@@ -407,7 +407,8 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 				'output' => 'ProfilerOutputDump',
 				'outputDir' => '/tmp/prof',
 			];
-			$wgDebugLogFile = "php://stdout";
+			$wgJobRunRate=0;
+			// $wgDebugLogFile = "php://stdout";
 			break;
 		default:
 			break;
