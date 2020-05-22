@@ -235,7 +235,15 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			$wgMemCachedServers = [ 'memcached:11211' ];
 			// To grant sysops permissions to edit interwiki data
 			$wgGroupPermissions['sysop']['interwiki'] = true;
+			$wgMathWmcServer = true;
+			$wgMathDebug = true;
+			$wgMathUploadEnabled = true;
 			wfLoadExtension( 'MathSearch' );
+			wfLoadExtension( 'OAuth' );
+			$wgGroupPermissions['sysop']['mwoauthproposeconsumer'] = true;
+			$wgGroupPermissions['sysop']['mwoauthmanageconsumer'] = true;
+			$wgGroupPermissions['sysop']['mwoauthviewprivate'] = true;
+			$wgGroupPermissions['sysop']['mwoauthupdateownconsumer'] = true;
 			break;
 		case 'physikerwelt':
 			$wgServer = 'https://wiki.physikerwelt.de';
@@ -404,10 +412,11 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
 			$wgProfiler = [
 				'class' => 'ProfilerXhprof',
-				'output' => 'ProfilerOutputDump',
-				'outputDir' => '/tmp/prof',
+				'output' => ['ProfilerOutputDump'],
+				'outputDir' => '/tmp/',
 			];
 			$wgJobRunRate=0;
+			$wgEnableRestAPI = true;
 			// $wgDebugLogFile = "php://stdout";
 			break;
 		default:
