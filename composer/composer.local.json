@@ -6,9 +6,8 @@
    "extra": {
     "merge-plugin": {
       "include": [
-        "extensions/Wikibase/composer.json",
-        "extensions/Flow/composer.json",
-        "extensions/TemplateStyles/composer.json"
+        "extensions/*/composer.json",
+         "skins/*/composer.json"
       ]
     }
   }
