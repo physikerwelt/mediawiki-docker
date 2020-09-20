@@ -182,21 +182,31 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 	// $wgWBRepoSettings['siteLinkGroups'] = [ 'wikipedia', 'drmfgroup' ];
 	//$wgWBClientSettings['siteGlobalID'] = $match[1];
 } else {
-	$wikiId = 'test';
-	$dbMap = [
-		'arq20' => 'arqmath20',
-		'wikibase.svc' => 'arqmath20',
-		'formulasearchengine.com' => 'enfse',
-		'mathml' => 'mathml',
-		'drmf' => 'drmfbeta',
-		'wiki' => 'physikerwelt',
-		'localhost' => 'test',
-	];
-	foreach ( $dbMap as $urlPart => $id ) {
-		if ( strpos( $srv, $urlPart ) !== false ) {
-			$wikiId = $id;
-			$wgDBname = 'wiki_' . $id;
-			break;
+	$srv = $_SERVER['SERVER_NAME'];
+	if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv, $match ) == 1
+	) {
+		$wgDBname = 'wiki_' . $match[1];
+		$wikiId = false;
+		$wgDBuser = "wiki";
+		$wgServer = 'https://' . $match[1] . '.beta.math.wmflabs.org';
+		$wgLanguageCode = $match[1];
+		//$wgDefaultUserOptions['math'] = 'source';
+		$wgMathoidCli = false;
+		$wgDisableTitleConversion=true;
+		$wgDisableLangConversion=true;
+	} else {
+		$wikiId = 'test';
+		$dbMap = [
+			'formulasearchengine.com' => 'enfse',
+			'mathml' => 'mathml',
+			'drmf' => 'drmfbeta',
+		];
+		foreach ( $dbMap as $urlPart => $id ) {
+			if ( strpos( $srv, $urlPart ) !== false ) {
+				$wikiId = $id;
+				$wgDBname = 'wiki_' . $id;
+				break;
+			}
 		}
 	}
 	switch ( $wikiId ) {
