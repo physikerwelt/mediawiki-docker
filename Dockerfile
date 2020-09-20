@@ -1,4 +1,4 @@
-FROM composer:1.9.1 AS composer
+FROM composer:1.9.3 AS composer
 WORKDIR /composer
 COPY /core /composer
 COPY /mediawiki /composer
@@ -8,7 +8,7 @@ RUN docker-php-ext-install pcntl
 RUN ["composer","install","--no-dev"]
 
 
-FROM php:7.2-apache AS mediawiki-preq
+FROM php:7.3-apache AS mediawiki-preq
 
 # System dependencies
 RUN set -eux; \
@@ -47,7 +47,7 @@ RUN set -eux; \
 		opcache \
 	; \
 	\
-	pecl install apcu-5.1.17; \
+	pecl install APCu-5.1.18; \
 	docker-php-ext-enable \
 		apcu \
 	; \
