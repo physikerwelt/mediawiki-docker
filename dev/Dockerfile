@@ -1,6 +1,6 @@
 FROM physikerwelt/mediawiki
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends git zip
+    apt-get install -y --no-install-recommends git zip libzip-dev
 RUN docker-php-ext-install zip
 COPY --from=composer:1.9.1 /usr/bin/composer /usr/local/bin/composer
 RUN ["composer","install"]
