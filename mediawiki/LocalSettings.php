@@ -402,7 +402,7 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			$wgEnableWikibaseRepo = true;
 			$wgEnableWikibaseClient = true;
 			wfLoadExtension( 'MathSearch' );
-			wfLoadExtension( 'Flow' );
+			// wfLoadExtension( 'Flow' );
 			$wgGroupPermissions['*']['edit'] = true;
 			$wgNamespaceContentModels[NS_TALK] = 'flow-board';
 			$wgNamespaceContentModels[NS_USER_TALK] = 'flow-board';
@@ -410,15 +410,19 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			require_once "$IP/extensions/Wikibase/repo/ExampleSettings.php";
 			require_once "$IP/extensions/Wikibase/client/WikibaseClient.php";
 			require_once "$IP/extensions/Wikibase/client/ExampleSettings.php";
-			$wgProfiler = [
-				'class' => 'ProfilerXhprof',
-				'output' => ['ProfilerOutputDump'],
-				'outputDir' => '/tmp/',
-			];
+//			$wgProfiler = [
+//				'class' => 'ProfilerXhprof',
+//				'output' => ['ProfilerOutputDump'],
+//				'outputDir' => '/tmp/',
+//			];
 			$wgJobRunRate=0;
 			$wgEnableRestAPI = true;
-			// $wgDebugLogFile = "php://stdout";
-			break;
+            $wgWBRepoSettings['siteLinkGroups'] = [ 'wikipedia' ];
+            $wgWBClientSettings['siteGlobalID'] = 'local-test';
+            // insert site with
+            // php addSite.php --filepath=http://localhost/w/\$1 --pagepath=http://localhost/wiki/\$1 --language en --interwiki-id local-test local-test wikipedia
+            // $wgDebugLogFile = "php://stdout";
+            break;
 		default:
 			break;
 	}
