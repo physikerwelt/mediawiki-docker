@@ -415,15 +415,23 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 //				'output' => ['ProfilerOutputDump'],
 //				'outputDir' => '/tmp/',
 //			];
-			$wgJobRunRate=0;
+			$wgJobRunRate = 0;
 			$wgEnableRestAPI = true;
-            $wgWBRepoSettings['siteLinkGroups'] = [ 'wikipedia' ];
-            $wgWBClientSettings['siteGlobalID'] = 'local-test';
-            // insert site with
-            // php addSite.php --filepath=http://localhost/w/\$1 --pagepath=http://localhost/wiki/\$1 --language en --interwiki-id local-test local-test wikipedia
-            // $wgDebugLogFile = "php://stdout";
-            break;
+			$wgWBRepoSettings['siteLinkGroups'] = [ 'wikipedia' ];
+			$wgWBClientSettings['siteGlobalID'] = 'local-test';
+			// insert site with
+			// php addSite.php --filepath=http://localhost/w/\$1 --pagepath=http://localhost/wiki/\$1 --language en --interwiki-id local-test local-test wikipedia
+			// $wgDebugLogFile = "php://stdout";
+			$wgMathWikibasePropertyIdDefiningFormula = "P1";
+			$wgMathWikibasePropertyIdHasPart = "P2";
+			$wgMathWikibasePropertyIdQuantitySymbol = "P3";
+			$wgWBRepoSettings['formatterUrlProperty'] = 'P4';
+			break;
 		default:
 			break;
+	}
+	foreach ( glob( "/var/www/html/LocalSettings.d/*.php" ) as $filename ) {
+		/** @noinspection PhpIncludeInspection */
+		require_once $filename;
 	}
 }
