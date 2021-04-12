@@ -253,6 +253,7 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			include_once( "$IP/extensions/SemanticDrilldown/SemanticDrilldown.php" );
 			$wgLogo = "/images/PhysikWiki.png";
 			$wgHashedUploadDirectory = false;
+			$wgDevelopmentWarnings = false;
 			break;
 		case 'drmfbeta':
 			$wgServer = 'https://drmf-beta.wmflabs.org';
