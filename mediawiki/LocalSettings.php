@@ -254,6 +254,8 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			$wgLogo = "/images/PhysikWiki.png";
 			$wgHashedUploadDirectory = false;
 			$wgDevelopmentWarnings = false;
+			// See https://phabricator.wikimedia.org/T273261#6904033
+			error_reporting(0);
 			break;
 		case 'drmfbeta':
 			$wgServer = 'https://drmf-beta.wmflabs.org';
