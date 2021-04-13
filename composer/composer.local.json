@@ -1,7 +1,8 @@
 {
     "require": {
         "mediawiki/semantic-media-wiki": "~3.2",
-        "mediawiki/semantic-result-formats": "~3.2"
+        "mediawiki/semantic-result-formats": "~3.2",
+        "mediawiki/page-forms": "^5.1"
     },
    "extra": {
     "merge-plugin": {
