@@ -1,0 +1,22 @@
+version: '3.7'
+# run via docker-compose -f core/docker-compose.yml -f core/docker-compose.override.yml -f docker-compose-core.yml up -d
+services:
+  # These lines ensure file ownership is set to your host user/group
+  mediawiki:
+    user: "${MW_DOCKER_UID}:${MW_DOCKER_GID}"
+    # Linux users only: this extra_hosts section is necessary for Xdebug:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ../mediawiki/extensions:/var/www/html/w/extensions
+      - ../mediawiki/skins:/var/www/html/w/skins
+  mediawiki-web:
+    user: "${MW_DOCKER_UID}:${MW_DOCKER_GID}"
+    volumes:
+      - ../mediawiki/extensions:/var/www/html/w/extensions
+      - ../mediawiki/skins:/var/www/html/w/skins
+  mediawiki-jobrunner:
+    user: "${MW_DOCKER_UID}:${MW_DOCKER_GID}"
+    volumes:
+      - ../mediawiki/extensions:/var/www/html/w/extensions
+      - ../mediawiki/skins:/var/www/html/w/skins
