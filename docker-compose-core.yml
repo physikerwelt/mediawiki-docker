@@ -10,13 +10,16 @@ services:
     volumes:
       - ../mediawiki/extensions:/var/www/html/w/extensions
       - ../mediawiki/skins:/var/www/html/w/skins
+      - ../mediawiki/LocalSettings.php:/var/www/html/w/LocalSettings.php
   mediawiki-web:
     user: "${MW_DOCKER_UID}:${MW_DOCKER_GID}"
     volumes:
       - ../mediawiki/extensions:/var/www/html/w/extensions
       - ../mediawiki/skins:/var/www/html/w/skins
+      - ../mediawiki/LocalSettings.php:/var/www/html/w/LocalSettings.php
   mediawiki-jobrunner:
     user: "${MW_DOCKER_UID}:${MW_DOCKER_GID}"
     volumes:
       - ../mediawiki/extensions:/var/www/html/w/extensions
       - ../mediawiki/skins:/var/www/html/w/skins
+      - ../mediawiki/LocalSettings.php:/var/www/html/w/LocalSettings.php
