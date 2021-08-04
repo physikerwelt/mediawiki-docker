@@ -76,3 +76,6 @@
 [submodule "mediawiki/extensions/TemplateStyles"]
 	path = mediawiki/extensions/TemplateStyles
 	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/TemplateStyles
+[submodule "mediawiki/extensions/VisualEditor"]
+	path = mediawiki/extensions/VisualEditor
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor

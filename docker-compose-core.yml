@@ -12,6 +12,8 @@ services:
       - ../mediawiki/skins:/var/www/html/w/skins
       - ../mediawiki/LocalSettings.php:/var/www/html/w/LocalSettings.php
       - ../composer/composer.local.json:/var/www/html/w/composer.local.json
+    environment:
+      SERVER_NAME: localhost
   mediawiki-web:
     user: "${MW_DOCKER_UID}:${MW_DOCKER_GID}"
     volumes:

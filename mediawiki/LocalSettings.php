@@ -431,11 +431,37 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			$wgWBClientSettings['siteGlobalID'] = 'local-test';
 			// insert site with
 			// php addSite.php --filepath=http://localhost/w/\$1 --pagepath=http://localhost/wiki/\$1 --language en --interwiki-id local-test local-test wikipedia
-			// $wgDebugLogFile = "php://stdout";
+			$wgDebugLogFile = "php://stdout";
 			$wgMathWikibasePropertyIdDefiningFormula = "P1";
 			$wgMathWikibasePropertyIdHasPart = "P2";
 			$wgMathWikibasePropertyIdQuantitySymbol = "P3";
 			$wgWBRepoSettings['formatterUrlProperty'] = 'P4';
+			wfLoadExtension( 'VisualEditor' );
+
+			$PARSOID_INSTALL_DIR = 'vendor/wikimedia/parsoid'; # bundled copy
+#$PARSOID_INSTALL_DIR = '/my/path/to/git/checkout/of/Parsoid';
+
+// For developers: ensure Parsoid is executed from $PARSOID_INSTALL_DIR,
+// (not the version included in mediawiki-core by default)
+// Must occur *before* wfLoadExtension()
+			if ( $PARSOID_INSTALL_DIR !== 'vendor/wikimedia/parsoid' ) {
+				AutoLoader::$psr4Namespaces += [
+					// Keep this in sync with the "autoload" clause in
+					// $PARSOID_INSTALL_DIR/composer.json
+					'Wikimedia\\Parsoid\\' => "$PARSOID_INSTALL_DIR/src",
+				];
+			}
+
+			wfLoadExtension( 'Parsoid', "$PARSOID_INSTALL_DIR/extension.json" );
+
+# Manually configure Parsoid
+			$wgVisualEditorParsoidAutoConfig = false;
+			$wgParsoidSettings = [
+				'useSelser' => true,
+				'rtTestMode' => false,
+				'linting' => false,
+			];
+			$wgVirtualRestConfig['modules']['parsoid'] = [];
 			break;
 		default:
 			break;
