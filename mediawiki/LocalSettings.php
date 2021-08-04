@@ -397,7 +397,14 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			$wgHooks['BeforePageDisplay'][] = 'efCustomBeforePageDisplay';
 			break;
 		case 'test':
-			$wgServer = '//' . $srv;
+			$wgServer = '//' . $srv . ":8080";
+			$wgScriptPath = "/w";
+			$wgResourceBasePath = $wgScriptPath;
+			$wgLoadScript=	"{$wgScriptPath}/load.php";
+			$wgScript = "{$wgScriptPath}/index.php";
+			$wgArticlePath = "{$wgScript}?title=$1";
+			$wgLogo = "$wgResourceBasePath/resources/assets/wiki.png";
+			$wgRightsIcon = "$wgResourceBasePath/resources/assets/licenses/cc-by.png";
 			$wgShowExceptionDetails = true;
 			$wgDebugToolbar = true;
 			$wgShowSQLErrors = true;

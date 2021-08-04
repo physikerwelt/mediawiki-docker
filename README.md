@@ -18,3 +18,7 @@ services:
     volumes:
       - local/path:/var/www/html/extensions/extension-name
 ```
+## Transition to less custom method
+``
+docker-compose -f core/docker-compose.yml -f core/docker-compose.override.yml -f docker-compose-core.yml up -d
+```

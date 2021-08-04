@@ -1,2 +1,6 @@
 .pw7
 .idea
+# managed by composer
+mediawiki/extensions/SemanticMediaWiki
+mediawiki/extensions/SemanticResultFormats
+mediawiki/extensions/PageForms
