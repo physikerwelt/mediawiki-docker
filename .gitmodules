@@ -79,3 +79,12 @@
 [submodule "mediawiki/extensions/VisualEditor"]
 	path = mediawiki/extensions/VisualEditor
 	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor
+[submodule "mediawiki/extensions/TextExtracts"]
+	path = mediawiki/extensions/TextExtracts
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/TextExtracts.git
+[submodule "mediawiki/extensions/PageImages"]
+	path = mediawiki/extensions/PageImages
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/PageImages.git
+[submodule "mediawiki/extensions/Popups"]
+	path = mediawiki/extensions/Popups
+	url = https://gerrit.wikimedia.org/r/mediawiki/extensions/Popups.git

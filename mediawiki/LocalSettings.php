@@ -463,6 +463,11 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 				'linting' => false,
 			];
 			$wgVirtualRestConfig['modules']['parsoid'] = [];
+			wfLoadExtensions( [
+				'TextExtracts',
+				'PageImages',
+				'Popups'
+			] );
 			break;
 		default:
 			break;
