@@ -406,7 +406,7 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			$wgLogo = "$wgResourceBasePath/resources/assets/wiki.png";
 			$wgRightsIcon = "$wgResourceBasePath/resources/assets/licenses/cc-by.png";
 			$wgShowExceptionDetails = true;
-			$wgDebugToolbar = true;
+
 			$wgShowSQLErrors = true;
 			$wgShowDBErrorBacktrace = true;
 			$wgEnableWikibaseRepo = true;
@@ -473,8 +473,8 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 		default:
 			break;
 	}
-	foreach ( glob( "/var/www/html/LocalSettings.d/*.php" ) as $filename ) {
-		/** @noinspection PhpIncludeInspection */
-		require_once $filename;
-	}
+}
+foreach ( glob( "/var/www/html/LocalSettings.d/*.php" ) as $filename ) {
+	/** @noinspection PhpIncludeInspection */
+	require_once $filename;
 }
