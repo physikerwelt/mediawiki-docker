@@ -10,7 +10,6 @@ services:
     links:
       - database
   database:
-    container_name: db
     image: mariadb
     environment:
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
