@@ -112,7 +112,7 @@ RUN npm i
 FROM mediawiki-preq
  
 COPY --from=mathoid /srv /srv
-
+COPY /mediawiki /var/www/html
 COPY --from=composer /composer /var/www/html
 RUN chown -R www-data:www-data /var/www/html/images
 # Fix for for T250504
