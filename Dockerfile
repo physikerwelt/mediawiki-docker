@@ -2,7 +2,8 @@ FROM composer:1.9.3 AS composer
 RUN apk add icu-dev
 WORKDIR /composer
 COPY /core /composer
-COPY /mediawiki /composer
+COPY /mediawiki/extensions /composer/extensions
+COPY /mediawiki/skins /composer/skins
 COPY ./composer /composer
 ENV COMPOSER_ALLOW_SUPERUSER 1 
 RUN docker-php-ext-install pcntl
