@@ -439,7 +439,7 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 			wfLoadExtension( 'VisualEditor' );
 			$wgEnableJavaScriptTest=true;
 
-			$PARSOID_INSTALL_DIR = 'vendor/wikimedia/parsoid'; # bundled copy
+			$PARSOID_INSTALL_DIR = '/var/www/html/w/vendor/wikimedia/parsoid'; # bundled copy
 #$PARSOID_INSTALL_DIR = '/my/path/to/git/checkout/of/Parsoid';
 
 // For developers: ensure Parsoid is executed from $PARSOID_INSTALL_DIR,
@@ -468,6 +468,7 @@ if ( preg_match( '/([a-z-]+)\.beta\.(physikerwelt\.de|math\.wmflabs.org)/', $srv
 				'PageImages',
 				'Popups'
 			] );
+			$wgMathoidCli = false;
 			break;
 		default:
 			break;
