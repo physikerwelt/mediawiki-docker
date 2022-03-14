@@ -16,8 +16,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 
-## Uncomment this to disable output compression
-# $wgDisableOutputCompression = true;
+## Uncomment this to disable output compression cf https://phabricator.wikimedia.org/T269516
+$wgDisableOutputCompression = true;
 
 $wgSitename = "testwiki";
 $wgMetaNamespace = "Testwiki";
